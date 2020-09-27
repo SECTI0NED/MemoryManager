@@ -11,11 +11,12 @@ class MemoryManager {
         MemoryManager();
         ~MemoryManager();
         virtual void allocateMemory();
-        list<MemoryBlock*> allocMBList;
+        list<MemoryBlock*> test;
 
-    private:
-        // list<MemoryBlock*> allocMBList;
-        // list<MemoryBlock*> freedMBList;
+    protected:
+        list<char*> data;
+        list<MemoryBlock*> allocMBList;
+        list<MemoryBlock*> freedMBList;
 
 
 };

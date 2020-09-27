@@ -52,12 +52,12 @@ int main(int argc, char const *argv[])
     memoryBlock4->setStartingAddress((char**) request4);
     memoryBlock4->setSize(size4);
 
-    memory->allocMBList.push_back(memoryBlock1);
-    memory->allocMBList.push_back(memoryBlock2);
-    memory->allocMBList.push_back(memoryBlock3); 
-    memory->allocMBList.push_back(memoryBlock4);
+    memory->test.push_back(memoryBlock1);
+    memory->test.push_back(memoryBlock2);
+    memory->test.push_back(memoryBlock3); 
+    memory->test.push_back(memoryBlock4);
 
-    for(MemoryBlock* mb: memory->allocMBList){
+    for(MemoryBlock* mb: memory->test){
         cout << "Memory Block details:" << endl;
         cout << "Starting address: " << mb->getStartingAddress() << endl;
         cout << "Data: " << mb->getData() << endl;
