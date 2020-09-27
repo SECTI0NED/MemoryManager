@@ -6,7 +6,7 @@ ODIR = obj
 SDIR = src
 
 
-_DEP = Memory.hpp MemoryBlock.hpp Types.hpp
+_DEP = MemoryManager.hpp MemoryBlock.hpp Types.hpp
 DEP = $(patsubst %, $(DDIR)/%, $(_DEP))
 
 _OBJ = main.o Memory.o MemoryBlock.o

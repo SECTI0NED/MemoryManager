@@ -7,14 +7,14 @@
 #include <string.h>
 #include <unistd.h>
 #include <iostream>
-#include "../dep/Memory.hpp"
+#include "../dep/MemoryManager.hpp"
 
 using std::cout;
 using std::endl;
 
 int main(int argc, char const *argv[])
 {
-    Memory* memory = new Memory();
+    MemoryManager* memory = new MemoryManager();
 
     MemoryBlock* memoryBlock1 = (MemoryBlock*)malloc(sizeof(MemoryBlock*));
     const char* data1 = "Nikita";
