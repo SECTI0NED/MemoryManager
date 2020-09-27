@@ -1,6 +1,10 @@
-#include "../dep/Memory.hpp"
+#include "../dep/MemoryManager.hpp"
 
-Memory::Memory() {}
+MemoryManager::MemoryManager() {}
 
-Memory::~Memory() {}
+MemoryManager::~MemoryManager() {}
+
+void MemoryManager::allocateMemory() {
+    // Each memory Manager will have its own implementation fo this method.
+}
 
