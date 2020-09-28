@@ -5,7 +5,8 @@
 class FirstFit : MemoryManager {
     public:
         FirstFit(list<char*> data);
-        void allocateMemory();
+        void allocateMemory(int blocks);
+        void run(int allocate, int free)
 };
 
 #endif // FIRST_FIT_H

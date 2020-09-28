@@ -4,11 +4,11 @@ MemoryManager::MemoryManager() {}
 
 MemoryManager::~MemoryManager() {}
 
-void MemoryManager::allocateMemory() {
+void MemoryManager::allocateMemory(int blocks) {
     // Each Memory Manager will have its own implementation of allocateMemory().
 }
 
-void MemoryManager::freeMemory() {
+void MemoryManager::freeMemory(int blocks) {
 
 }
 
