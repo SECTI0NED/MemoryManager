@@ -1,6 +1,7 @@
 #include "../dep/MemoryManager.hpp"
 
 MemoryManager::MemoryManager() {}
+MemoryManager::MemoryManager(list<char*>* data) {}
 
 MemoryManager::~MemoryManager() {}
 
@@ -13,6 +14,10 @@ void MemoryManager::freeMemory(int blocks) {
 }
 
 void MemoryManager::mergeBlocks() {
+
+}
+
+void run(int allocate, int free) {
 
 }
 

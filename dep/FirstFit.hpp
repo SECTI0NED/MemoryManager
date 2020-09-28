@@ -2,11 +2,12 @@
 #define FIRST_FIT_H
 
 #include "./MemoryManager.hpp"
-class FirstFit : MemoryManager {
+class FirstFit : public MemoryManager {
     public:
-        FirstFit(list<char*> data);
+        FirstFit(list<char*>* data);
+        ~FirstFit();
         void allocateMemory(int blocks);
-        void run(int allocate, int free)
+        void run(int allocate, int free);
 };
 
 #endif // FIRST_FIT_H

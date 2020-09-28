@@ -6,10 +6,10 @@ ODIR = obj
 SDIR = src
 
 
-_DEP = MemoryManager.hpp MemoryBlock.hpp Types.hpp
+_DEP = Types.hpp main.hpp MemoryManager.hpp MemoryBlock.hpp FirstFit.hpp
 DEP = $(patsubst %, $(DDIR)/%, $(_DEP))
 
-_OBJ = main.o Memory.o MemoryBlock.o
+_OBJ = main.o Memory.o MemoryBlock.o FirstFit.o
 OBJ = $(patsubst %, $(ODIR)/%, $(_OBJ))
 
 
