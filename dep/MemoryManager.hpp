@@ -10,7 +10,7 @@ class MemoryManager {
     public:
         MemoryManager();
         MemoryManager(list<char*>* data);
-        ~MemoryManager();
+        virtual ~MemoryManager();
         /* Runs the Memory Manager according to how 
         many blocks are allocated and deleted while 
         there is still unallocated data */
@@ -31,9 +31,6 @@ class MemoryManager {
         // For allocating memory
         virtual void allocateMemory(int blocks);
 
-    
-
-        
         list<MemoryBlock*> allocMBList;
         list<MemoryBlock*> freedMBList;
 

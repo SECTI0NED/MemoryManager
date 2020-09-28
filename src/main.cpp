@@ -60,3 +60,18 @@ void handleMemoryManager(list<char*>* data, string method) {
     // }
     memoryManager->run(ALLOCATE, FREE);
 }
+
+/*********************************** Error Messages ***********************************/
+
+void printHelpMessage() {
+    cout << "Error: Invalid Format." << endl
+         << "\tFormat: ./program [filename] [method]" << endl
+         << "\t[method]: ff | bf | wf " << endl
+         << "\tff = First Fit" << endl
+         << "\tbf = Best Fit" << endl
+         << "\twf = Worst Fit" << endl;
+}
+
+void printFileNotFoundMessage(string filename) {
+    cout << "Error: File '" << filename << "' Not Found." << endl;
+}
