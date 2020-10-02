@@ -10,7 +10,23 @@ void MemoryManager::allocateMemory(int blocks) {
 }
 
 void MemoryManager::freeMemory(int blocks) {
+    int numberOfBlocks = blocks;
+    while(numberOfBlocks > 0){
+        /* Get the memory block from allocMBList */
+        MemoryBlock* memoryBlock = allocMBList.front();
+        
+        /* Clear the data */
 
+        /* Add this block to the freedMBList*/
+        freedMBList.push_back(memoryBlock);
+        
+        /* Merge adjacent blocks */
+        
+        /* Remove the block from the allocMBList 
+        and reduce the amount of blocks to free*/
+        allocMBList.pop_front();
+        numberOfBlocks-=1;
+    }
 }
 
 void MemoryManager::mergeBlocks() {

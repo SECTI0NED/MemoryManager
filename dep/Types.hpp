@@ -22,5 +22,6 @@ using std::make_shared;
 
 
 typedef char** memory_address;
+typedef std::list<char*>::iterator char_ptr_iterator;
 
 #endif // TYPES_H
