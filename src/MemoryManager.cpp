@@ -15,13 +15,15 @@ void MemoryManager::freeMemory(int blocks) {
         /* Get the memory block from allocMBList */
         MemoryBlock* memoryBlock = allocMBList.front();
         
-        /* Clear the data */
+        /* Clear the data while maintaining the size. */
+        memoryBlock->clearData();
 
         /* Add this block to the freedMBList*/
         freedMBList.push_back(memoryBlock);
         
         /* Merge adjacent blocks */
-        
+        mergeBlocks();
+
         /* Remove the block from the allocMBList 
         and reduce the amount of blocks to free*/
         allocMBList.pop_front();
@@ -30,6 +32,15 @@ void MemoryManager::freeMemory(int blocks) {
 }
 
 void MemoryManager::mergeBlocks() {
+    /*
+        BlockPtr = first block (A)
+        Check if next block (B) exists
+        If there is a next block (B)
+            Check if B has cleared data
+            If there B is cleared then
+            Get size of B
+    
+    */
 
 }
 

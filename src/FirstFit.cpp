@@ -29,8 +29,8 @@ void FirstFit::allocateMemory(int blocks) {
         int size = strlen(data) + 1;
         void* request = sbrk(size);
         strcpy((char*) request, data);
-        memoryBlock->setData((char*) request);
         memoryBlock->setSize(size);
+        memoryBlock->setData((char*) request);
         memoryBlock->setStartingAddress((char**) request);
 
         /* Decide where to allocate the block (allocMBList or freedMBList) */

@@ -28,7 +28,8 @@ class MemoryManager {
 
         // Move memory blocks form allocMBList to freeMBList
         void freeMemory(int blocks);
-
+        
+    
         // For allocating memory
         virtual void allocateMemory(int blocks);
 

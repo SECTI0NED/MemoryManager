@@ -15,6 +15,9 @@ class MemoryBlock {
         void setStartingAddress(memory_address getStartingAddress);
         void setData(char* data);
         void setSize(int size);
+
+        // Reset data to \0
+        void clearData();
         
         //Getters
         memory_address getStartingAddress();

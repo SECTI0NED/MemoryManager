@@ -27,3 +27,11 @@ char* MemoryBlock::getData() {
 int MemoryBlock::getSize(){
     return size;
 }
+
+void MemoryBlock::clearData() {
+    int counter = 0;
+    while(data[counter] != '\0'){
+        data[counter] = '\0';
+        counter++;
+    }
+}
