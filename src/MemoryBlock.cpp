@@ -16,6 +16,10 @@ void MemoryBlock::setSize(int size) {
     this->size = size;
 }
 
+void MemoryBlock::setId(int id){
+    this->id = id;
+}
+
 memory_address MemoryBlock::getStartingAddress() {
     return startingAddress;
 }
@@ -28,6 +32,10 @@ int MemoryBlock::getSize(){
     return size;
 }
 
+int MemoryBlock::getId() {
+    return id;
+}
+
 void MemoryBlock::clearData() {
     int counter = 0;
     while(data[counter] != '\0'){
@@ -35,3 +43,4 @@ void MemoryBlock::clearData() {
         counter++;
     }
 }
+

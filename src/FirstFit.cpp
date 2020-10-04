@@ -15,6 +15,7 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
 }
 
 void FirstFit::allocateMemory(int blocks) {
+    int counter = 0;
     int numberOfBlocks = blocks;
     while(numberOfBlocks != 0){
         /* Get the data from the list of names */
@@ -29,10 +30,12 @@ void FirstFit::allocateMemory(int blocks) {
         int size = strlen(data) + 1;
         void* request = sbrk(size);
         strcpy((char*) request, data);
+        memoryBlock->setId(counter);
         memoryBlock->setSize(size);
         memoryBlock->setData((char*) request);
         memoryBlock->setStartingAddress((char**) request);
-
+        counter++;
+        
         /* Decide where to allocate the block (allocMBList or freedMBList) */
         if(freedMBList.empty()){
             allocMBList.push_back(memoryBlock);

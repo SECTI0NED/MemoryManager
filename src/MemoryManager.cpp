@@ -33,24 +33,29 @@ void MemoryManager::freeMemory(int blocks) {
 
 void MemoryManager::mergeBlocks() {
     /*
+
         BlockPtr = first block (A)
         NextBlockPtr = nullptr
 
         while(BlockPtr != lastBlock in freedMBList)
-        NextBlockPtr = NextBlock (B)
-            If there B is cleared then
-                Get size of B (bsize)
-                Get size of A (asize)
-                Let size = (asize += bsize)
-                Let data = char[asize] = {'\0'}
-                void* request = sbrk(size) // GET NEW REQUEST WITH NEW A SIZE
-                strcpy((char*) request, data); // COPY DATA INTO REQUEST
-                Set A->size = size
-                Set A->data = (char*) request
-                Set A->startingaddress = (char**) request
-                Remove B from freedMBList
-                NextBlockPtr = nullptr
-                BlockPtr = A
+        NextBlockPtr = next block (B)
+            If A is cleared then:
+                If B cleared then
+                    Get size of B (bsize)
+                    Get size of A (asize)
+                    Let size = (asize += bsize)
+                    Let data = char[asize] = {'\0'}
+                    void* request = sbrk(size) // GET NEW REQUEST WITH NEW A SIZE
+                    strcpy((char*) request, data); // COPY DATA INTO REQUEST
+                    Set A->size = size
+                    Set A->data = (char*) request
+                    Set A->startingaddress = (char**) request
+                    Remove B from freedMBList
+                    NextBlockPtr = nullptr
+                    BlockPtr = A
+            Else A is not cleared (Shift the pointers by 1 block)
+                BlockPtr = NextBlockPtr
+                NextBlockPtr = NextBlockPtr + 1
 
     
     */
