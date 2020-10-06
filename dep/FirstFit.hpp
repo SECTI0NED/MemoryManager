@@ -4,7 +4,7 @@
 #include "./MemoryManager.hpp"
 class FirstFit : public MemoryManager {
     public:
-        FirstFit(list<char*>* data);
+        FirstFit(string filename);
         ~FirstFit();
         void allocateMemory(int blocks);
         void run(int allocate, int free);

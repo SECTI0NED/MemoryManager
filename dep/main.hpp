@@ -11,11 +11,10 @@
 
 
 /* For handling the Memory Manager*/
-void handleMemoryManager(list<char*>* data, string method);
+void handleMemoryManager(string filename, string method);
 
 /* File Handling */
-bool fileExists(string filename);
-void read(list<char*>* data, string filename);
+bool fileExists(string filename);;
 
 /* For printing error messages. */
 void printHelpMessage();

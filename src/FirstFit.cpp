@@ -1,19 +1,24 @@
 #include "../dep/FirstFit.hpp"
 
-FirstFit::FirstFit(list<char*>* data) {
-    for(char_ptr_iterator i = data->begin(); i != data->end(); ++i){
-        this->data.push_back(*i);
+FirstFit::FirstFit(string filename) {
+    ifstream stream(filename);
+    string line = "";
+    while(!stream.eof()){
+        stream >> line; 
+        dataList.push_back(line);
     }
+    stream.close();
+
 }
 
 FirstFit::~FirstFit() {}
 
 void FirstFit::run(int allocateBlocks, int freeBlocks) {
-    allocateMemory(allocateBlocks);
-    // while(!data.empty()){
-    //     allocateMemory(allocateBlocks);
-    //     freeMemory(freeBlocks);
-    // }
+
+    while(!dataList.empty()){
+        allocateMemory(allocateBlocks);
+        freeMemory(freeBlocks);
+    }
     // for(list<MemoryBlock*>::iterator i = allocMBList.begin(); i != allocMBList.end(); ++i){
     //     cout << "Memory Block ID: " << (*i)->getId() << endl;
     // }
@@ -22,17 +27,20 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
     // }
 }
 
-void FirstFit::allocateMemory(int blocks) {
-    int counter = 0;
-    int numberOfBlocks = blocks;
-    
-    while(numberOfBlocks > 0){
-        //cout << numberOfBlocks << endl;
-        /* Get the data from the list of names */
-        const char* data = "FUCK";
+void FirstFit::allocateMemory(int numberOfBlocks) {
 
+    int counter = 0;
+    while(counter != numberOfBlocks){
+        cout << counter << endl;
         /* Create Memory Block */
-        MemoryBlock* memoryBlock = (MemoryBlock*)malloc(sizeof(MemoryBlock*));
+        MemoryBlock* memoryBlock = new MemoryBlock();     
+        /* Get the data from the list of names
+        and convert from string to cstring.*/
+        string line = this->dataList.front();
+        char cstring[line.size()];
+        strcpy(cstring, line.c_str());
+
+        const char* data = cstring;
         int size = strlen(data) + 1;
         void* request = sbrk(size);
         strcpy((char*) request, data);
@@ -43,18 +51,16 @@ void FirstFit::allocateMemory(int blocks) {
         ++counter;
 
         /* Reduce the size of the list and number of blocks */
-        //this->data.pop_front();
-        numberOfBlocks = numberOfBlocks - 1;
-        cout << "Completed" << endl;
+        this->dataList.pop_front();
 
-        // /* Decide where to allocate the block (allocMBList or freedMBList) */
-        // if(freedMBList.empty()){
-        //     allocMBList.push_back(memoryBlock);
-        // } else {
-        //     // Go through each block of freedMBList to select a MemoryBlock
-        //     // If MB already occupied or does not have enough space
-        //     // Then allocate the block to allocMBList.
-        // }
+        /* Decide where to allocate the block (allocMBList or freedMBList) */
+        if(freedMBList.empty()){
+            allocMBList.push_back(memoryBlock);
+        } else {
+            // Go through each block of freedMBList to select a MemoryBlock
+            // If MB already occupied or does not have enough space
+            // Then allocate the block to allocMBList.
+        }
         
     }
 }

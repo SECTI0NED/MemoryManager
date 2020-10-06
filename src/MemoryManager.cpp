@@ -2,7 +2,19 @@
 
 MemoryManager::MemoryManager() {}
 MemoryManager::~MemoryManager() {}
-MemoryManager::MemoryManager(list<char*>* data) {}
+
+
+MemoryManager::MemoryManager(string filename) {
+    ifstream stream(filename);
+    string line = "";
+    while(!stream.eof()){
+        stream >> line; 
+        // char cstring[line.size()];
+        // strcpy(cstring, line.c_str());
+        dataList.push_back(line); 
+    }
+    stream.close();
+}
 
 
 void MemoryManager::allocateMemory(int blocks) {
