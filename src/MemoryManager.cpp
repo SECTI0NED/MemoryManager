@@ -38,7 +38,11 @@ void MemoryManager::freeMemory(int blocks) {
         allocMBList.pop_front();
         numberOfBlocks-=1;
     }
-
+    cout << "Freed:" << endl;
+    for(MemoryBlock* mb : freedMBList){
+        cout << mb->getId() << " ";
+    }
+    cout << endl;
     /* Merge adjacent blocks */
     mergeBlocks();
 }
@@ -51,9 +55,13 @@ void MemoryManager::mergeBlocks() {
     list<MemoryBlock*>::iterator nextBlockPtr = freedMBList.end();
 
     while((*currentBlockPtr) != freedMBList.back()){
-        nextBlockPtr = ++currentBlockPtr;
+        nextBlockPtr = currentBlockPtr;
+        nextBlockPtr++;
         if((*currentBlockPtr)->isFree()){
+            cout << "Current block is free" << endl;
             if((*nextBlockPtr)->isFree()) {
+                cout << "Next block is free" << endl;
+                cout << "CurrentBlock ID: " << (*currentBlockPtr)->getId() << endl;
                 // Retrieve the new size of the memory block
                 int currentBlockSize = (*currentBlockPtr)->getSize();
                 int nextBlockSize = (*nextBlockPtr)->getSize();
@@ -63,25 +71,27 @@ void MemoryManager::mergeBlocks() {
                 chunk with the new size (not necessary, but it's 
                 better than having the both the memory blocks' old 
                 data mixed togeher) */
+           
                 char data[newSize] = {0};
                 void* request = sbrk(newSize);
                 strcpy((char*) request, data);
 
                 /* Set the current block's new size and data*/
+        
                 (*currentBlockPtr)->setSize(newSize);
                 (*currentBlockPtr)->setData((char*) request);
+                (*currentBlockPtr)->clearData();
                 (*currentBlockPtr)->setStartingAddress((char**) request);
 
                 // Erase the next block
+                cout << "NextBlock ID: "<< (*nextBlockPtr)->getId() << endl;
                 freedMBList.erase(nextBlockPtr);
 
                 // Reset the next block pointer
                 nextBlockPtr = freedMBList.end();
-
-                // Shift the current block pointer by one
-                ++currentBlockPtr;
             }
         } else {
+            cout << "Current block is NOT free" << endl;
             currentBlockPtr = nextBlockPtr;
         }
     }

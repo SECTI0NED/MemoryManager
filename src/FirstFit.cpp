@@ -19,19 +19,20 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
         allocateMemory(allocateBlocks);
         freeMemory(freeBlocks);
     }
-    // for(list<MemoryBlock*>::iterator i = allocMBList.begin(); i != allocMBList.end(); ++i){
-    //     cout << "Memory Block ID: " << (*i)->getId() << endl;
-    // }
-    // for(list<MemoryBlock*>::iterator i = freedMBList.begin(); i != freedMBList.end(); ++i){
-    //     cout << "Memory Block ID: " << (*i)->getId() << endl;
-    // }
+    cout << "Alloc:" << endl;
+    for(list<MemoryBlock*>::iterator i = allocMBList.begin(); i != allocMBList.end(); ++i){
+        cout << "Memory Block ID: " << (*i)->getId() << endl;
+    }
+    cout << "Freed:" << endl;
+    for(list<MemoryBlock*>::iterator i = freedMBList.begin(); i != freedMBList.end(); ++i){
+        cout << "Memory Block ID: " << (*i)->getId() << endl;
+    }
 }
 
 void FirstFit::allocateMemory(int numberOfBlocks) {
 
     int counter = 0;
     while(counter != numberOfBlocks){
-        cout << counter << endl;
         /* Create Memory Block */
         MemoryBlock* memoryBlock = new MemoryBlock();     
         /* Get the data from the list of names
