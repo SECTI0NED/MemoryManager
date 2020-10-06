@@ -12,6 +12,7 @@
 using std::cout;
 using std::endl;
 
+// g++ -Wall -Werror -std=c++11 -O -o test src/test.cpp src/MemoryManager.cpp src/MemoryBlock.cpp
 int main(int argc, char const *argv[])
 {
     MemoryManager* memory = new MemoryManager();

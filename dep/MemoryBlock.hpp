@@ -17,22 +17,25 @@ class MemoryBlock {
         void setSize(int size);
         void setId(int id);
 
-        // Reset data to \0
-        void clearData();
-        
         //Getters
         memory_address getStartingAddress();
         char* getData();
         int getSize();
         int getId();
 
+
+        // Reset data to \0
+        void clearData();
+
+        // If the data is cleared
+        bool isFree();
         
     private:
         memory_address startingAddress;
         char* data;
         int size;
         int id;
-
+        bool blockIsfree;
 };
 
 #endif // MEMORY_BLOCK_H

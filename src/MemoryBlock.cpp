@@ -9,6 +9,7 @@ void MemoryBlock::setStartingAddress(memory_address startingAddress) {
 }
 
 void MemoryBlock::setData(char* data) {
+    this->blockIsfree = false;
     this->data = data;
 }
 
@@ -42,5 +43,10 @@ void MemoryBlock::clearData() {
         data[counter] = '\0';
         counter++;
     }
+    blockIsfree = true;
+}
+
+bool MemoryBlock::isFree() {
+    return blockIsfree;
 }
 

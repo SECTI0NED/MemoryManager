@@ -20,46 +20,59 @@ void MemoryManager::freeMemory(int blocks) {
 
         /* Add this block to the freedMBList*/
         freedMBList.push_back(memoryBlock);
-        
-        /* Merge adjacent blocks */
-        mergeBlocks();
 
         /* Remove the block from the allocMBList 
         and reduce the amount of blocks to free*/
         allocMBList.pop_front();
         numberOfBlocks-=1;
     }
+
+    /* Merge adjacent blocks */
+    mergeBlocks();
 }
 
+
+// For merging adjacent free blocks in freedMBList
 void MemoryManager::mergeBlocks() {
-    /*
 
-        BlockPtr = first block (A)
-        NextBlockPtr = nullptr
+    list<MemoryBlock*>::iterator currentBlockPtr = freedMBList.begin();
+    list<MemoryBlock*>::iterator nextBlockPtr = freedMBList.end();
 
-        while(BlockPtr != lastBlock in freedMBList)
-        NextBlockPtr = next block (B)
-            If A is cleared then:
-                If B cleared then
-                    Get size of B (bsize)
-                    Get size of A (asize)
-                    Let size = (asize += bsize)
-                    Let data = char[asize] = {'\0'}
-                    void* request = sbrk(size) // GET NEW REQUEST WITH NEW A SIZE
-                    strcpy((char*) request, data); // COPY DATA INTO REQUEST
-                    Set A->size = size
-                    Set A->data = (char*) request
-                    Set A->startingaddress = (char**) request
-                    Remove B from freedMBList
-                    NextBlockPtr = nullptr
-                    BlockPtr = A
-            Else A is not cleared (Shift the pointers by 1 block)
-                BlockPtr = NextBlockPtr
-                NextBlockPtr = NextBlockPtr + 1
+    while((*currentBlockPtr) != freedMBList.back()){
+        nextBlockPtr = ++currentBlockPtr;
+        if((*currentBlockPtr)->isFree()){
+            if((*nextBlockPtr)->isFree()) {
+                // Retrieve the new size of the memory block
+                int currentBlockSize = (*currentBlockPtr)->getSize();
+                int nextBlockSize = (*nextBlockPtr)->getSize();
+                int newSize = currentBlockSize + nextBlockSize;
 
-    
-    */
+                /* Reset the data to null and request a new memory 
+                chunk with the new size (not necessary, but it's 
+                better than having the both the memory blocks' old 
+                data mixed togeher) */
+                char data[newSize] = {0};
+                void* request = sbrk(newSize);
+                strcpy((char*) request, data);
 
+                /* Set the current block's new size and data*/
+                (*currentBlockPtr)->setSize(newSize);
+                (*currentBlockPtr)->setData((char*) request);
+                (*currentBlockPtr)->setStartingAddress((char**) request);
+
+                // Erase the next block
+                freedMBList.erase(nextBlockPtr);
+
+                // Reset the next block pointer
+                nextBlockPtr = freedMBList.end();
+
+                // Shift the current block pointer by one
+                ++currentBlockPtr;
+            }
+        } else {
+            currentBlockPtr = nextBlockPtr;
+        }
+    }
 }
 
 void MemoryManager::run(int allocate, int free) {

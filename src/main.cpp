@@ -2,6 +2,7 @@
 
 int main(int argc, char const *argv[])
 {
+    
     list<char*> data;
     if(argc <= 2){
         printHelpMessage();
@@ -58,7 +59,7 @@ void handleMemoryManager(list<char*>* data, string method) {
     // } else if(method == WORST_FIT) {
     //     memoryManager = make_shared<WorstFit>(data);
     // }
-    memoryManager->run(ALLOCATE, FREE);
+    memoryManager->run(3, 3);
 }
 
 /*********************************** Error Messages ***********************************/

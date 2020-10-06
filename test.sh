@@ -1,0 +1,1 @@
+./program _data/test/test1.txt ff
