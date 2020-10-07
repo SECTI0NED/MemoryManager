@@ -89,4 +89,15 @@ void MemoryManager::mergeBlocks() {
 }
 
 
+MemoryBlock* MemoryManager::splitBlock(MemoryBlock* memoryBlock){
+    
+
+
+    /* merge the excess block if it 
+    adjacent to a cleared block */
+    mergeBlocks();
+
+    return memoryBlock;
+}
+
 

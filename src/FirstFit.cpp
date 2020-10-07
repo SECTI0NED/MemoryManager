@@ -8,7 +8,6 @@ FirstFit::FirstFit(string filename) {
         dataList.push_back(line);
     }
     stream.close();
-
 }
 
 FirstFit::~FirstFit() {}
@@ -23,7 +22,7 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
     for(MemoryBlock* mb : allocMBList){
         cout << "Memory Block ID: " << mb->getId() << endl;
     }
-    
+
     cout << "Freed: " << endl;
     for(MemoryBlock* mb : freedMBList){
         cout << "Memory Block ID: " << mb->getId() << endl;
@@ -67,10 +66,10 @@ void FirstFit::allocateMemory(int numberOfBlocks) {
                     /* If the block has a larger size than needed, 
                     then split the block to get the required size*/
                     } else if(memoryBlock->getSize() >  size) {
-
-                        // Split the block and get the chunk needed.
-
-
+                        MemoryBlock* splitMemoryBlock = splitBlock(memoryBlock);
+                        splitMemoryBlock->isFree(false);
+                        splitMemoryBlock->setData((char*) request);
+                        splitMemoryBlock->setStartingAddress((char**) request);
                         allocated = true;
                         mb = freedMBList.end();
                     }

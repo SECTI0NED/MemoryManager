@@ -28,7 +28,7 @@ class MemoryManager {
         // Merge consecutive blocks if they are free in freeMBList
         void mergeBlocks();
 
-        void splitBlock(int id);
+        MemoryBlock* splitBlock(MemoryBlock* memoryBlock);
 
         // Move memory blocks form allocMBList to freeMBList
         void freeMemory(int numberOfBlocks);
