@@ -88,10 +88,18 @@ void MemoryManager::mergeBlocks() {
     }
 }
 
+// Used to split a block
+MemoryBlock* MemoryManager::splitBlock(list<MemoryBlock*>::iterator memoryBlockIter, int size){
+    MemoryBlock* memoryBlock = (*memoryBlockIter);
+    memoryBlock->setSize(size);
 
-MemoryBlock* MemoryManager::splitBlock(MemoryBlock* memoryBlock){
-    
-
+    MemoryBlock* excessBlock = new MemoryBlock();
+    int excessBlockSize = memoryBlock->getSize() - size;
+    int excessBlockId = 10000 + memoryBlock->getId();
+    excessBlock->setId(excessBlockId);
+    excessBlock->setSize(excessBlockSize);
+    excessBlock->isFree(true);
+    freedMBList.insert(memoryBlockIter, excessBlock);
 
     /* merge the excess block if it 
     adjacent to a cleared block */

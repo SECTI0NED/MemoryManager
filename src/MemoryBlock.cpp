@@ -4,36 +4,44 @@ MemoryBlock::MemoryBlock() {}
 
 MemoryBlock::~MemoryBlock() {}
 
-void MemoryBlock::setStartingAddress(memory_address startingAddress) {
-    this->startingAddress = startingAddress;
-}
-
-void MemoryBlock::setData(char* data) {
-    this->data = data;
+void MemoryBlock::setId(int id){
+    this->id = id;
 }
 
 void MemoryBlock::setSize(int size) {
     this->size = size;
 }
 
-void MemoryBlock::setId(int id){
-    this->id = id;
+void MemoryBlock::setData(char* data) {
+    this->data = data;
 }
 
-memory_address MemoryBlock::getStartingAddress() {
-    return startingAddress;
+void MemoryBlock::setStartingAddress(memory_address startingAddress) {
+    this->startingAddress = startingAddress;
 }
 
-char* MemoryBlock::getData() {
-    return data;
+void MemoryBlock::isFree(bool blockIsFree){
+    this->blockIsFree = blockIsFree;
+}
+
+int MemoryBlock::getId() {
+    return id;
 }
 
 int MemoryBlock::getSize(){
     return size;
 }
 
-int MemoryBlock::getId() {
-    return id;
+char* MemoryBlock::getData() {
+    return data;
+}
+
+memory_address MemoryBlock::getStartingAddress() {
+    return startingAddress;
+}
+
+bool MemoryBlock::isFree() {
+    return blockIsFree;
 }
 
 void MemoryBlock::clearData() {
@@ -45,10 +53,4 @@ void MemoryBlock::clearData() {
     blockIsFree = true;
 }
 
-bool MemoryBlock::isFree() {
-    return blockIsFree;
-}
 
-void MemoryBlock::isFree(bool blockIsFree){
-    this->blockIsFree = blockIsFree;
-}
