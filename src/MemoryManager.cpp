@@ -23,7 +23,8 @@ void MemoryManager::allocateMemory(int numberOfBlocks) {
 }
 
 void MemoryManager::freeMemory(int numberOfBlocks) {
-    while(numberOfBlocks > 0){
+    if(numberOfBlocks <= (int) dataList.size()){
+        while(numberOfBlocks > 0){
         /* Get the memory block from allocMBList */
         MemoryBlock* memoryBlock = allocMBList.front();
         
@@ -41,6 +42,8 @@ void MemoryManager::freeMemory(int numberOfBlocks) {
 
     /* Merge adjacent blocks */
     mergeBlocks();
+    }
+    
 }
 
 
