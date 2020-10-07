@@ -19,51 +19,83 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
         allocateMemory(allocateBlocks);
         freeMemory(freeBlocks);
     }
-    cout << "Alloc:" << endl;
-    for(list<MemoryBlock*>::iterator i = allocMBList.begin(); i != allocMBList.end(); ++i){
-        cout << "Memory Block ID: " << (*i)->getId() << endl;
+    cout << "Alloc: " << endl;
+    for(MemoryBlock* mb : allocMBList){
+        cout << "Memory Block ID: " << mb->getId() << endl;
     }
-    cout << "Freed:" << endl;
-    for(list<MemoryBlock*>::iterator i = freedMBList.begin(); i != freedMBList.end(); ++i){
-        cout << "Memory Block ID: " << (*i)->getId() << endl;
+    
+    cout << "Freed: " << endl;
+    for(MemoryBlock* mb : freedMBList){
+        cout << "Memory Block ID: " << mb->getId() << endl;
     }
+
 }
 
 void FirstFit::allocateMemory(int numberOfBlocks) {
-
     int id = 0;
     while(numberOfBlocks > 0){
-        /* Create Memory Block */
-        MemoryBlock* memoryBlock = new MemoryBlock();     
+        bool allocated = false;
+
         /* Get the data from the list of names
         and convert from string to cstring.*/
         string line = this->dataList.front();
         char cstring[line.size()];
         strcpy(cstring, line.c_str());
+        const char* data = cstring;     // data in c-string
+        int size = strlen(data);        // size of the data (No need for '+1')
 
-        const char* data = cstring;
-        int size = strlen(data) + 1;
+        /* Use sbrk to allocate memory chunk 
+        for the cstring in the Memory Block */
         void* request = sbrk(size);
         strcpy((char*) request, data);
-        memoryBlock->setId(id);
-        memoryBlock->setSize(size);
-        memoryBlock->setData((char*) request);
-        memoryBlock->isFree(false);
-        memoryBlock->setStartingAddress((char**) request);
-        ++id;
 
-        /* Reduce the size of the list and number of blocks */
-        this->dataList.pop_front();
-        numberOfBlocks-=1;
+        /* Decide where to allocate the information (allocMBList or freedMBList) */
+        if(!freedMBList.empty()){
+            list<MemoryBlock*>::iterator mb;
+            for(mb = freedMBList.begin(); mb != freedMBList.end(); ++mb) {
+                MemoryBlock* memoryBlock = (*mb);
+                if(memoryBlock->isFree()) {
+                    /* If the block is the same size needed, 
+                    then allocate the data to this block */
+                    if(memoryBlock->getSize() == size) {
+                        memoryBlock->isFree(false);
+                        memoryBlock->setData((char*) request);
+                        memoryBlock->setStartingAddress((char**) request);
+                        allocated = true;
+                        mb = freedMBList.end();
 
-        /* Decide where to allocate the block (allocMBList or freedMBList) */
-        if(freedMBList.empty()){
+                    /* If the block has a larger size than needed, 
+                    then split the block to get the required size*/
+                    } else if(memoryBlock->getSize() >  size) {
+
+                        // Split the block and get the chunk needed.
+
+
+                        allocated = true;
+                        mb = freedMBList.end();
+                    }
+                }
+            }
+
+        } else if(freedMBList.empty() || !allocated){
+            /* Create Memory Block */
+            MemoryBlock* memoryBlock = new MemoryBlock();  
+
+            /* Set info for the Memory Block */
+            memoryBlock->setId(id);
+            memoryBlock->setSize(size);
+            memoryBlock->isFree(false);
+            memoryBlock->setData((char*) request);
+            memoryBlock->setStartingAddress((char**) request);
+            ++id;
             allocMBList.push_back(memoryBlock);
-        } else {
-            // Go through each block of freedMBList to select a MemoryBlock
-            // If MB already occupied or does not have enough space
-            // Then allocate the block to allocMBList.
+            allocated = true;
         }
-        
+
+        if(allocated){
+            /* Reduce the size of the list and number of blocks */
+            this->dataList.pop_front();
+            numberOfBlocks-=1;
+        }
     }
 }

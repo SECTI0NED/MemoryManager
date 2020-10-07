@@ -23,7 +23,6 @@ void MemoryManager::allocateMemory(int numberOfBlocks) {
 }
 
 void MemoryManager::freeMemory(int numberOfBlocks) {
-    int numberOfBlocks = blocks;
     while(numberOfBlocks > 0){
         /* Get the memory block from allocMBList */
         MemoryBlock* memoryBlock = allocMBList.front();
