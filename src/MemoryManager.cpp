@@ -65,7 +65,10 @@ void MemoryManager::mergeBlocks() {
                 chunk with the new size (this is  not necessary, 
                 but it's better than having the both the memory 
                 blocks' old data mixed together) */
-                char data[newSize] = {0};
+                char data[newSize];
+                for(int i = 0; i < newSize; ++i){
+                    data[i] = '\0';
+                }
                 void* request = sbrk(newSize);
                 strcpy((char*) request, data);
 

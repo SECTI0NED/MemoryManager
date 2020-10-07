@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -Werror -std=c++11 -O
+CFLAGS = -Wall -Werror -Wno-deprecated -std=c++11 -O
 
 DDIR = dep
 ODIR = obj
