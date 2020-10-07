@@ -35,7 +35,7 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
 }
 
 void FirstFit::allocateMemory(int numberOfBlocks) {
-    if(numberOfBlocks <= dataList.size()){
+    if((numberOfBlocks <= (int) dataList.size())){
         int id = 0;
         while(numberOfBlocks > 0){
             bool allocated = false;

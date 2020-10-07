@@ -94,6 +94,8 @@ void MemoryManager::mergeBlocks() {
 // Used to split a block
 MemoryBlock* MemoryManager::splitBlock(list<MemoryBlock*>::iterator memoryBlockIter, int size){
     cout << "Splitting the block" << endl;
+    list<MemoryBlock*>::iterator excessBlockPosition = memoryBlockIter;
+    excessBlockPosition++;
     MemoryBlock* memoryBlock = (*memoryBlockIter);
 
     int excessBlockId = memoryBlock->getId() + 10000;
@@ -105,7 +107,15 @@ MemoryBlock* MemoryManager::splitBlock(list<MemoryBlock*>::iterator memoryBlockI
     excessBlock->setId(excessBlockId);
     excessBlock->setSize(excessBlockSize);
     excessBlock->isFree(true);
-    freedMBList.insert(memoryBlockIter, excessBlock);
+    freedMBList.insert(excessBlockPosition, excessBlock);
+    cout << "Excess Block ID: " <<  excessBlock->getId() << endl;
+    cout << "Excess Block Size: " << excessBlock->getSize() << endl;
+
+    cout << "***freedMBList***" << endl;
+    for(MemoryBlock* mb : freedMBList){
+        cout << mb->getId() << " ";
+    }
+    cout << endl;
   
     /* merge the excess block if it 
     adjacent to a cleared block */
