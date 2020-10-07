@@ -31,8 +31,8 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
 
 void FirstFit::allocateMemory(int numberOfBlocks) {
 
-    int counter = 0;
-    while(counter != numberOfBlocks){
+    int id = 0;
+    while(numberOfBlocks > 0){
         /* Create Memory Block */
         MemoryBlock* memoryBlock = new MemoryBlock();     
         /* Get the data from the list of names
@@ -45,14 +45,16 @@ void FirstFit::allocateMemory(int numberOfBlocks) {
         int size = strlen(data) + 1;
         void* request = sbrk(size);
         strcpy((char*) request, data);
-        memoryBlock->setId(counter);
+        memoryBlock->setId(id);
         memoryBlock->setSize(size);
         memoryBlock->setData((char*) request);
+        memoryBlock->isFree(false);
         memoryBlock->setStartingAddress((char**) request);
-        ++counter;
+        ++id;
 
         /* Reduce the size of the list and number of blocks */
         this->dataList.pop_front();
+        numberOfBlocks-=1;
 
         /* Decide where to allocate the block (allocMBList or freedMBList) */
         if(freedMBList.empty()){

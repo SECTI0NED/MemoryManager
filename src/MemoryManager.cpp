@@ -9,19 +9,20 @@ MemoryManager::MemoryManager(string filename) {
     string line = "";
     while(!stream.eof()){
         stream >> line; 
-        // char cstring[line.size()];
-        // strcpy(cstring, line.c_str());
         dataList.push_back(line); 
     }
     stream.close();
 }
 
+void MemoryManager::run(int allocate, int free) {
+    // Each Memory Manager will have its own implementation of run().
+}
 
-void MemoryManager::allocateMemory(int blocks) {
+void MemoryManager::allocateMemory(int numberOfBlocks) {
     // Each Memory Manager will have its own implementation of allocateMemory().
 }
 
-void MemoryManager::freeMemory(int blocks) {
+void MemoryManager::freeMemory(int numberOfBlocks) {
     int numberOfBlocks = blocks;
     while(numberOfBlocks > 0){
         /* Get the memory block from allocMBList */
@@ -38,11 +39,7 @@ void MemoryManager::freeMemory(int blocks) {
         allocMBList.pop_front();
         numberOfBlocks-=1;
     }
-    cout << "Freed:" << endl;
-    for(MemoryBlock* mb : freedMBList){
-        cout << mb->getId() << " ";
-    }
-    cout << endl;
+
     /* Merge adjacent blocks */
     mergeBlocks();
 }
@@ -58,46 +55,39 @@ void MemoryManager::mergeBlocks() {
         nextBlockPtr = currentBlockPtr;
         nextBlockPtr++;
         if((*currentBlockPtr)->isFree()){
-            cout << "Current block is free" << endl;
             if((*nextBlockPtr)->isFree()) {
-                cout << "Next block is free" << endl;
-                cout << "CurrentBlock ID: " << (*currentBlockPtr)->getId() << endl;
+
                 // Retrieve the new size of the memory block
                 int currentBlockSize = (*currentBlockPtr)->getSize();
                 int nextBlockSize = (*nextBlockPtr)->getSize();
                 int newSize = currentBlockSize + nextBlockSize;
 
                 /* Reset the data to null and request a new memory 
-                chunk with the new size (not necessary, but it's 
-                better than having the both the memory blocks' old 
-                data mixed togeher) */
-           
+                chunk with the new size (this is  not necessary, 
+                but it's better than having the both the memory 
+                blocks' old data mixed together) */
                 char data[newSize] = {0};
                 void* request = sbrk(newSize);
                 strcpy((char*) request, data);
 
                 /* Set the current block's new size and data*/
-        
                 (*currentBlockPtr)->setSize(newSize);
+                (*currentBlockPtr)->isFree(true);
                 (*currentBlockPtr)->setData((char*) request);
-                (*currentBlockPtr)->clearData();
                 (*currentBlockPtr)->setStartingAddress((char**) request);
 
                 // Erase the next block
-                cout << "NextBlock ID: "<< (*nextBlockPtr)->getId() << endl;
                 freedMBList.erase(nextBlockPtr);
 
                 // Reset the next block pointer
                 nextBlockPtr = freedMBList.end();
             }
         } else {
-            cout << "Current block is NOT free" << endl;
+            /* If current block is not free, move to the next block.*/
             currentBlockPtr = nextBlockPtr;
         }
     }
 }
 
-void MemoryManager::run(int allocate, int free) {
 
-}
 
