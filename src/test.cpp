@@ -12,23 +12,36 @@
 using std::cout;
 using std::endl;
 
-// g++ -Wall -Werror -std=c++11 -O -o test src/test.cpp src/MemoryManager.cpp src/MemoryBlock.cpp
+// g++ -Wall -Werror  -Wno-deprecated -std=c++11 -O -o test src/test.cpp src/MemoryManager.cpp src/MemoryBlock.cpp
 int main(int argc, char const *argv[])
 {
-    
-    int i = 0;
-    while(i != 3){
-        MemoryBlock* memoryBlock1 = (MemoryBlock*)malloc(sizeof(MemoryBlock*));
-        const char* data1 = "Nikita";
-        int size1 = strlen(data1) + 1;
-        void* request1 = sbrk(size1);
-        strcpy((char*) request1, data1);
-        memoryBlock1->setData((char*) request1);
-        memoryBlock1->setStartingAddress((char**) request1);
-        memoryBlock1->setSize(size1);
-        cout << memoryBlock1->getData() << endl;
-        ++i;
-    }
+    MemoryBlock* memoryBlock1 = new MemoryBlock();
+    const char* data1 = "Nikita";
+    int size1 = strlen(data1) + 1;
+    void* request1 = sbrk(size1);
+    strcpy((char*) request1, data1);
+    memoryBlock1->setData((char*) request1);
+    memoryBlock1->setStartingAddress((char**) request1);
+    memoryBlock1->setSize(size1);
+    cout << memoryBlock1->getData() << endl;
+    int newSize = memoryBlock1->getSize() + 1;
+    cout << "Old: " << size1 << endl;
+    cout << "New: " << newSize << endl;
+    // int i = 0;
+    // while(i != 3){
+    //     MemoryBlock* memoryBlock1 = (MemoryBlock*)malloc(sizeof(MemoryBlock*));
+    //     const char* data1 = "Nikita";
+    //     int size1 = strlen(data1) + 1;
+    //     void* request1 = sbrk(size1);
+    //     strcpy((char*) request1, data1);
+    //     memoryBlock1->setData((char*) request1);
+    //     memoryBlock1->setStartingAddress((char**) request1);
+    //     memoryBlock1->setSize(size1);
+    //     cout << memoryBlock1->getData() << endl;
+    //     ++i;
+    // }
+
+
     
     //MemoryManager* memory = new MemoryManager();
     // MemoryBlock* memoryBlock1 = (MemoryBlock*)malloc(sizeof(MemoryBlock*));

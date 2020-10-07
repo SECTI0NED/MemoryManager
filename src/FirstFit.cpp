@@ -16,7 +16,9 @@ FirstFit::~FirstFit() {}
 void FirstFit::run(int allocateBlocks, int freeBlocks) {
 
     while(!dataList.empty()){
+        cout << "--Allocating data--" << endl;
         allocateMemory(allocateBlocks);
+        cout << "--Freeing memory blocks--"<< endl;
         freeMemory(freeBlocks);
     }
     
@@ -50,7 +52,8 @@ void FirstFit::allocateMemory(int numberOfBlocks) {
             for the cstring in the Memory Block */
             void* request = sbrk(size);
             strcpy((char*) request, data);
-
+            cout << "Size required: " << size << endl;
+            
             /* Decide where to allocate the information (allocMBList or freedMBList) */
             if(!freedMBList.empty()){
                 cout << "freedMBList is NOT empty." << endl;
@@ -66,17 +69,19 @@ void FirstFit::allocateMemory(int numberOfBlocks) {
                             memoryBlock->setData((char*) request);
                             memoryBlock->setStartingAddress((char**) request);
                             allocated = true;
+                            cout << "Allocated" << endl;
                             break;
 
                         /* If the block has a larger size than needed, 
                         then split the block to get the required size*/
                         } else if(memoryBlock->getSize() > size) {
-                            cout << "Found a memory block with a larger size." << endl;
+                            cout << "Found a memory block with a larger size: " << memoryBlock->getSize() << endl;
                             MemoryBlock* splitMemoryBlock = splitBlock(mb, size);
                             splitMemoryBlock->isFree(false);
                             splitMemoryBlock->setData((char*) request);
                             splitMemoryBlock->setStartingAddress((char**) request);
                             allocated = true;
+                            cout << "Allocated" << endl;
                             break;
                         }
                     }
@@ -96,6 +101,7 @@ void FirstFit::allocateMemory(int numberOfBlocks) {
                 memoryBlock->setStartingAddress((char**) request);
                 ++id;
                 allocMBList.push_back(memoryBlock);
+                cout << "Allocated" << endl;
                 allocated = true;
             }
 
