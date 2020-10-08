@@ -135,10 +135,20 @@ void MemoryManager::printDetails(string filename, string managerTypeLabel, int s
                         fileStream << endl;
                     }
                }
+               cout << endl;
                fileStream << ALLOC_INFO << endl;
                for(list<MemoryBlock*>::iterator mb = allocMBList.begin(); mb != allocMBList.end(); ++mb) {
                    fileStream << MEMORY_BLOCK_ADDRESS << '\t'
-                   
+                   << (*mb)->getMemoryBlockAddress() << '\t'
+                   << MEMORY_BLOCK_SIZE << '\t'
+                   << (*mb)->getSize() << '\t'  
+                   << CONTENTS_STARTING_ADDRESS << '\t'
+                   << (*mb)->getDataStartingAddress() << '\t'
+                   << MEMORY_BLOCK_CONTENTS << '\t';
+                   for(int i = 0; (*mb)->getData()[i] != '\0'; ++i){
+                       fileStream << (*mb)->getData()[i];
+                   }
+                   fileStream << endl;
                }
 }
 
