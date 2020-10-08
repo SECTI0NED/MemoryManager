@@ -23,7 +23,7 @@ void MemoryManager::allocateMemory(int numberOfBlocks) {
     // Each Memory Manager will have its own implementation of allocateMemory().
 }
 
-// Need to select random block from allocMBList
+/* Need to select random block from allocMBList */
 void MemoryManager::freeMemory(int numberOfBlocks) {
     if(numberOfBlocks <= (int) allocMBList.size()){
         while(numberOfBlocks > 0){
@@ -59,7 +59,7 @@ void MemoryManager::freeMemory(int numberOfBlocks) {
 }
 
 
-// For merging consecutive free blocks in freedMBList
+/* For merging consecutive free blocks in freedMBList */
 void MemoryManager::mergeBlocks() {
 
     list<MemoryBlock*>::iterator currentBlockPtr = freedMBList.begin();
@@ -93,27 +93,35 @@ void MemoryManager::mergeBlocks() {
     }
 }
 
-// Used to split a block
+/* Used to split a block */
 MemoryBlock* MemoryManager::splitBlock(list<MemoryBlock*>::iterator memoryBlockIter, int size){
-    cout << "Splitting the block" << endl;
+
+    /* Get position of excess memory block */
     list<MemoryBlock*>::iterator excessBlockPosition = memoryBlockIter;
     excessBlockPosition++;
+    
+    /* Current memory block = memoryBlock */
     MemoryBlock* memoryBlock = (*memoryBlockIter);
 
+    /* Get excess block details */
     int excessBlockId = memoryBlock->getId() + 1000;
     int excessBlockSize = memoryBlock->getSize() - size;
 
+    /* Set the size needed for the current memory block */
     memoryBlock->setSize(size);
 
+    /* Create the excess block with the excess size */
     MemoryBlock* excessBlock = new MemoryBlock();
     excessBlock->setId(excessBlockId);
     excessBlock->setSize(excessBlockSize);
     excessBlock->isFree(true);
     freedMBList.insert(excessBlockPosition, excessBlock);
 
+    /* Return the block with the required amount of space */
     return memoryBlock;
 }
 
+/* For printing details */
 void MemoryManager::printDetails(string filename, string managerTypeLabel, int sbrkTotal){
     ofstream fileStream(filename);
     fileStream << managerTypeLabel << endl

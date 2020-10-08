@@ -18,7 +18,7 @@ class MemoryManager {
         virtual void run(int allocate, int free);
 
         // For allocating memory
-        virtual void allocateMemory(int blocks);
+        virtual void allocateMemory(int numberOfBlocks);
         
      
 

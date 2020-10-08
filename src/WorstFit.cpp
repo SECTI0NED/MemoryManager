@@ -1,6 +1,6 @@
-#include "../dep/FirstFit.hpp"
+#include "../dep/WorstFit.hpp"
 
-FirstFit::FirstFit(string filename) {
+WorstFit::WorstFit(string filename){
     ifstream stream(filename);
     string line = "";
     while(!stream.eof()){
@@ -10,10 +10,9 @@ FirstFit::FirstFit(string filename) {
     stream.close();
 }
 
-FirstFit::~FirstFit() {}
+WorstFit::~WorstFit() {}
 
-void FirstFit::run(int allocateBlocks, int freeBlocks) {
-
+void WorstFit::run(int allocateBlocks, int freeBlocks) {
     while(!dataList.empty()){
         allocateMemory(allocateBlocks);
         if(!dataList.empty()){
@@ -22,7 +21,7 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
     }
 }
 
-void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
+void WorstFit::allocateMemory(int numberOfRequestedBlocks) {
     int sbrkTotal = 0;
     int numberOfBlocks = 0;
     if(numberOfRequestedBlocks <= (int) dataList.size()){
@@ -47,35 +46,14 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
         void* request = sbrk(size);
         sbrkTotal+=size;
         strcpy((char*) request, data);
-        
-        /* Decide where to allocate the information (allocMBList or freedMBList) */
-        if(!freedMBList.empty()){
-            list<MemoryBlock*>::iterator mb;
-            for(mb = freedMBList.begin(); mb != freedMBList.end(); ++mb) {
-                MemoryBlock* memoryBlock = (*mb);
-                if(memoryBlock->isFree()) {
-                    /* If the block is the same size needed, 
-                    then allocate the data to this block */
-                    if(memoryBlock->getSize() == size) {
-                        memoryBlock->isFree(false);
-                        memoryBlock->setData((char*) request);
-                        memoryBlock->setDataStartingAddress((char**) request);
-                        allocated = true;
-                        break;
 
-                    /* If the block has a larger size than needed, 
-                    then split the block to get the required size*/
-                    } else if(memoryBlock->getSize() > size) {
-                        MemoryBlock* splitMemoryBlock = splitBlock(mb, size);
-                        splitMemoryBlock->isFree(false);
-                        splitMemoryBlock->setData((char*) request);
-                        splitMemoryBlock->setDataStartingAddress((char**) request);
-                        mergeBlocks();
-                        allocated = true;
-                        break;
-                    }
-                }
-            }
+        /* Decide where to allocate the information (allocMBList or freedMBList) */ 
+        if(!freedMBList.empty()){
+            /* 
+                Go through entire list and find the LARGEST block that can store the data. 
+                If Block is NOT null then assign data (if block is null, then that means no satisfiable block was found)
+                Set allocated = true
+            */
         }
 
         /* If freedMBList is empty or the data has not been allocated 
@@ -99,7 +77,6 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
             numberOfBlocks-=1;
         }
     }
-
-    printDetails(FIRST_FIT_FILENAME, FIRST_FIT_LABEL, sbrkTotal);
-   
+    
+    printDetails(WORST_FIT_FILENAME, WORST_FIT_LABEL, sbrkTotal);
 }

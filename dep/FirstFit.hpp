@@ -6,7 +6,7 @@ class FirstFit : public MemoryManager {
     public:
         FirstFit(string filename);
         ~FirstFit();
-        void allocateMemory(int blocks);
+        void allocateMemory(int numberOfBlocks);
         void run(int allocate, int free);
 };
 
