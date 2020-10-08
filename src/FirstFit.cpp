@@ -58,8 +58,6 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
         numberOfBlocks = numberOfRequestedBlocks;
     } else {
         numberOfBlocks = dataList.size();
-        cout << "Error number of blocks requested to be allocated: " << numberOfBlocks << endl
-             << "Number of names in data list: " << dataList.size() << endl;
     }
     
     int id = 0;

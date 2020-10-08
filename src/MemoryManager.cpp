@@ -22,6 +22,7 @@ void MemoryManager::allocateMemory(int numberOfBlocks) {
     // Each Memory Manager will have its own implementation of allocateMemory().
 }
 
+// Need to select random block from allocMBList
 void MemoryManager::freeMemory(int numberOfBlocks) {
     if(numberOfBlocks <= (int) dataList.size()){
         while(numberOfBlocks > 0){
