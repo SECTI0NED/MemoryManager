@@ -16,7 +16,7 @@ void MemoryBlock::setData(char* data) {
     this->data = data;
 }
 
-void MemoryBlock::setStartingAddress(memory_address startingAddress) {
+void MemoryBlock::setDataStartingAddress(memory_address startingAddress) {
     this->startingAddress = startingAddress;
 }
 
@@ -36,7 +36,7 @@ char* MemoryBlock::getData() {
     return data;
 }
 
-memory_address MemoryBlock::getStartingAddress() {
+memory_address MemoryBlock::getDataStartingAddress() {
     return startingAddress;
 }
 
@@ -51,6 +51,10 @@ void MemoryBlock::clearData() {
         counter++;
     }
     blockIsFree = true;
+}
+
+MemoryBlock* MemoryBlock::getMemoryBlockAddress() {
+    return this;
 }
 
 

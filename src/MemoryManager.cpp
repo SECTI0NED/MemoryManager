@@ -27,10 +27,13 @@ void MemoryManager::allocateMemory(int numberOfBlocks) {
 void MemoryManager::freeMemory(int numberOfBlocks) {
     if(numberOfBlocks <= (int) allocMBList.size()){
         while(numberOfBlocks > 0){
+        
+        /* Get random positon in allocMBList */
         list<MemoryBlock*>::iterator randomPosition = allocMBList.begin();
         int random = rand() % allocMBList.size();
         std::advance(randomPosition, random);
-        /* Get the memory block from allocMBList */
+
+        /* Get a random memory block from allocMBList */
         MemoryBlock* memoryBlock = (*randomPosition);
         
         /* Clear the data while maintaining the size. */
@@ -41,7 +44,7 @@ void MemoryManager::freeMemory(int numberOfBlocks) {
 
         /* Remove the block from the allocMBList 
         and reduce the amount of blocks to free*/
-        allocMBList.pop_front();
+        allocMBList.erase(randomPosition);
         numberOfBlocks-=1;
         }
 
@@ -87,7 +90,7 @@ void MemoryManager::mergeBlocks() {
                 (*currentBlockPtr)->setSize(newSize);
                 (*currentBlockPtr)->isFree(true);
                 (*currentBlockPtr)->setData((char*) request);
-                (*currentBlockPtr)->setStartingAddress((char**) request);
+                (*currentBlockPtr)->setDataStartingAddress((char**) request);
 
                 // Erase the next block
                 freedMBList.erase(nextBlockPtr);

@@ -87,7 +87,7 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
                         cout << "Found a memory block with exact size required." << endl;
                         memoryBlock->isFree(false);
                         memoryBlock->setData((char*) request);
-                        memoryBlock->setStartingAddress((char**) request);
+                        memoryBlock->setDataStartingAddress((char**) request);
                         allocated = true;
                         cout << "Allocated" << endl;
                         break;
@@ -99,7 +99,7 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
                         MemoryBlock* splitMemoryBlock = splitBlock(mb, size);
                         splitMemoryBlock->isFree(false);
                         splitMemoryBlock->setData((char*) request);
-                        splitMemoryBlock->setStartingAddress((char**) request);
+                        splitMemoryBlock->setDataStartingAddress((char**) request);
                         
                         /* merge the excess block if it 
                         adjacent to a cleared block */
@@ -124,7 +124,7 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
             memoryBlock->setSize(size);
             memoryBlock->isFree(false);
             memoryBlock->setData((char*) request);
-            memoryBlock->setStartingAddress((char**) request);
+            memoryBlock->setDataStartingAddress((char**) request);
             ++id;
             allocMBList.push_back(memoryBlock);
             cout << "Allocated" << endl;

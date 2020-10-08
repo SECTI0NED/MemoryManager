@@ -12,18 +12,19 @@ class MemoryBlock {
         ~MemoryBlock();
 
         // Setters
-        void setStartingAddress(memory_address getStartingAddress);
+        void setDataStartingAddress(memory_address getStartingAddress);
         void setData(char* data);
         void setSize(int size);
         void setId(int id);
         void isFree(bool blockIsFree);
         
         //Getters
-        memory_address getStartingAddress();
+        memory_address getDataStartingAddress();
         char* getData();
         int getSize();
         int getId();
         bool isFree();
+        MemoryBlock* getMemoryBlockAddress();
 
         // Reset data to \0
         void clearData();
