@@ -38,10 +38,13 @@ void MemoryManager::freeMemory(int numberOfBlocks) {
         and reduce the amount of blocks to free*/
         allocMBList.pop_front();
         numberOfBlocks-=1;
-    }
+        }
 
-    /* Merge adjacent blocks */
-    mergeBlocks();
+        /* Merge adjacent blocks */
+        mergeBlocks();
+    } else {
+        cout << "Error number of blocks requested to be freed: " << numberOfBlocks << endl
+        << "Number of names in data list: " << dataList.size() << endl;
     }
     
 }
@@ -111,18 +114,6 @@ MemoryBlock* MemoryManager::splitBlock(list<MemoryBlock*>::iterator memoryBlockI
     excessBlock->setSize(excessBlockSize);
     excessBlock->isFree(true);
     freedMBList.insert(excessBlockPosition, excessBlock);
-    cout << "Excess Block ID: " <<  excessBlock->getId() << endl;
-    cout << "Excess Block Size: " << excessBlock->getSize() << endl;
-
-    cout << "***freedMBList***" << endl;
-    for(MemoryBlock* mb : freedMBList){
-        cout << mb->getId() << " ";
-    }
-    cout << endl;
-  
-    /* merge the excess block if it 
-    adjacent to a cleared block */
-    mergeBlocks();
 
     return memoryBlock;
 }

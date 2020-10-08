@@ -18,19 +18,37 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
     while(!dataList.empty()){
         cout << "--Allocating data--" << endl;
         allocateMemory(allocateBlocks);
-        cout << "--Freeing memory blocks--"<< endl;
-        freeMemory(freeBlocks);
+
+        if(!dataList.empty()){
+            cout << "--Freeing memory blocks--"<< endl;
+            freeMemory(freeBlocks);
+        }
+        
     }
-    
+    cout << "**********************************" << endl;
     cout << "Alloc: " << endl;
     for(MemoryBlock* mb : allocMBList){
         cout << "Memory Block ID: " << mb->getId() << endl;
+        cout << "Memory Block Data: " << endl;
+        for(int i = 0; mb->getData()[i] != '\0'; ++i){
+            cout << mb->getData()[i];
+        }
+        cout << endl;
     }
-
     cout << "Freed: " << endl;
     for(MemoryBlock* mb : freedMBList){
         cout << "Memory Block ID: " << mb->getId() << endl;
+        if(!mb->isFree()){
+            cout << "Memory Block Data: " << endl;
+            for(int i = 0; mb->getData()[i] != '\0'; ++i){
+                cout << mb->getData()[i];
+            }
+            cout << endl;
+        }
     }
+
+
+    
 
 }
 
@@ -46,7 +64,7 @@ void FirstFit::allocateMemory(int numberOfBlocks) {
             char cstring[line.size()];
             strcpy(cstring, line.c_str());
             const char* data = cstring;     // data in c-string
-            int size = strlen(data);        // size of the data (No need for '+1')
+            int size = strlen(data) + 1;        // size of the data
 
             /* Use sbrk to allocate memory chunk 
             for the cstring in the Memory Block */
@@ -80,6 +98,11 @@ void FirstFit::allocateMemory(int numberOfBlocks) {
                             splitMemoryBlock->isFree(false);
                             splitMemoryBlock->setData((char*) request);
                             splitMemoryBlock->setStartingAddress((char**) request);
+                            
+                            /* merge the excess block if it 
+                            adjacent to a cleared block */
+                            mergeBlocks();
+  
                             allocated = true;
                             cout << "Allocated" << endl;
                             break;
@@ -113,7 +136,7 @@ void FirstFit::allocateMemory(int numberOfBlocks) {
             }
         }
     } else {
-        cout << "Error number of blocks requested: " << numberOfBlocks << endl
+        cout << "Error number of blocks requested to be allocated: " << numberOfBlocks << endl
              << "Number of names in data list: " << dataList.size() << endl;
     }
     
