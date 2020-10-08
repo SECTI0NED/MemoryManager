@@ -1,4 +1,5 @@
 #include "../dep/MemoryManager.hpp"
+#include <random>
 
 MemoryManager::MemoryManager() {}
 MemoryManager::~MemoryManager() {}
@@ -24,10 +25,13 @@ void MemoryManager::allocateMemory(int numberOfBlocks) {
 
 // Need to select random block from allocMBList
 void MemoryManager::freeMemory(int numberOfBlocks) {
-    if(numberOfBlocks <= (int) dataList.size()){
+    if(numberOfBlocks <= (int) allocMBList.size()){
         while(numberOfBlocks > 0){
+        list<MemoryBlock*>::iterator randomPosition = allocMBList.begin();
+        int random = rand() % allocMBList.size();
+        std::advance(randomPosition, random);
         /* Get the memory block from allocMBList */
-        MemoryBlock* memoryBlock = allocMBList.front();
+        MemoryBlock* memoryBlock = (*randomPosition);
         
         /* Clear the data while maintaining the size. */
         memoryBlock->clearData();
@@ -105,7 +109,7 @@ MemoryBlock* MemoryManager::splitBlock(list<MemoryBlock*>::iterator memoryBlockI
     excessBlockPosition++;
     MemoryBlock* memoryBlock = (*memoryBlockIter);
 
-    int excessBlockId = memoryBlock->getId() + 10000;
+    int excessBlockId = memoryBlock->getId() + 1000;
     int excessBlockSize = memoryBlock->getSize() - size;
 
     memoryBlock->setSize(size);

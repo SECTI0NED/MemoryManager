@@ -46,10 +46,6 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
             cout << endl;
         }
     }
-
-
-    
-
 }
 
 void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
@@ -60,7 +56,7 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
         numberOfBlocks = dataList.size();
     }
     
-    int id = 0;
+    int id = 1;
     while(numberOfBlocks > 0){
         bool allocated = false;
 
@@ -80,7 +76,7 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
         
         /* Decide where to allocate the information (allocMBList or freedMBList) */
         if(!freedMBList.empty()){
-            cout << "freedMBList is NOT empty." << endl;
+            cout << "Searching in freedMBList..." << endl;
             list<MemoryBlock*>::iterator mb;
             for(mb = freedMBList.begin(); mb != freedMBList.end(); ++mb) {
                 MemoryBlock* memoryBlock = (*mb);
@@ -119,7 +115,7 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
         /* If freedMBList is empty or the data has not been allocated ~
         yet, then create a new memory block and add it to allocMBList. */
         if(freedMBList.empty() || !allocated){
-            cout << "freedMBList is empty or data not allocated" << endl;
+            cout << "Allocating data in allocMBList" << endl;
             /* Create Memory Block */
             MemoryBlock* memoryBlock = new MemoryBlock();  
 
