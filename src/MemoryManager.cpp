@@ -117,39 +117,42 @@ MemoryBlock* MemoryManager::splitBlock(list<MemoryBlock*>::iterator memoryBlockI
 void MemoryManager::printDetails(string filename, string managerTypeLabel, int sbrkTotal){
     ofstream fileStream(filename);
     fileStream << managerTypeLabel << endl
-               << SBRK_TOTAL << "\t" << sbrkTotal << endl
-               << FREED_INFO << endl;
-               for(list<MemoryBlock*>::iterator mb = freedMBList.begin(); mb != freedMBList.end(); ++mb){
-                    fileStream << MEMORY_BLOCK_ADDRESS << '\t' 
-                    << (*mb)->getMemoryBlockAddress() << '\t'
-                    << MEMORY_BLOCK_SIZE << '\t'
-                    << (*mb)->getSize();
-                    if(!(*mb)->isFree()) {
-                        fileStream << '\t'  
-                        << CONTENTS_STARTING_ADDRESS << '\t'
-                        << (*mb)->getDataStartingAddress() << '\t'
-                        << MEMORY_BLOCK_CONTENTS << '\t';
-                        for(int i = 0; (*mb)->getData()[i] != '\0'; ++i){
-                            fileStream << (*mb)->getData()[i];
-                        }
-                        fileStream << endl;
-                    }
-               }
-               cout << endl;
-               fileStream << ALLOC_INFO << endl;
-               for(list<MemoryBlock*>::iterator mb = allocMBList.begin(); mb != allocMBList.end(); ++mb) {
-                   fileStream << MEMORY_BLOCK_ADDRESS << '\t'
-                   << (*mb)->getMemoryBlockAddress() << '\t'
-                   << MEMORY_BLOCK_SIZE << '\t'
-                   << (*mb)->getSize() << '\t'  
-                   << CONTENTS_STARTING_ADDRESS << '\t'
-                   << (*mb)->getDataStartingAddress() << '\t'
-                   << MEMORY_BLOCK_CONTENTS << '\t';
-                   for(int i = 0; (*mb)->getData()[i] != '\0'; ++i){
-                       fileStream << (*mb)->getData()[i];
-                   }
-                   fileStream << endl;
-               }
+    << SBRK_TOTAL << "\t" << sbrkTotal << endl
+    << FREED_INFO << endl;
+    for(list<MemoryBlock*>::iterator mb = freedMBList.begin(); mb != freedMBList.end(); ++mb){
+        fileStream << MEMORY_BLOCK_ADDRESS << '\t' 
+        << (*mb)->getMemoryBlockAddress()
+        << "\t\t" << MEMORY_BLOCK_SIZE << '\t'
+        << (*mb)->getSize();
+        if(!(*mb)->isFree()) {
+            fileStream << "\t\t"
+            << CONTENTS_STARTING_ADDRESS << ' '
+            << (*mb)->getDataStartingAddress();
+            fileStream << "\t\t"
+            << MEMORY_BLOCK_CONTENTS << '\t';
+            for(int i = 0; (*mb)->getData()[i] != '\0'; ++i){
+                fileStream << (*mb)->getData()[i];
+            }
+            fileStream << endl;
+        }
+    }
+    fileStream << endl;
+    fileStream << ALLOC_INFO << endl;
+    for(list<MemoryBlock*>::iterator mb = allocMBList.begin(); mb != allocMBList.end(); ++mb) {
+        fileStream << MEMORY_BLOCK_ADDRESS << '\t'
+        << (*mb)->getMemoryBlockAddress() 
+        << "\t\t" << MEMORY_BLOCK_SIZE << '\t'
+        << (*mb)->getSize();
+        fileStream << "\t\t" 
+        << CONTENTS_STARTING_ADDRESS << ' '
+        << (*mb)->getDataStartingAddress()
+        << "\t\t" << MEMORY_BLOCK_CONTENTS << '\t';
+        for(int i = 0; (*mb)->getData()[i] != '\0'; ++i){
+            fileStream << (*mb)->getData()[i];
+        }
+        fileStream << endl;
+    }
+    fileStream.close();
 }
 
 

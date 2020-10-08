@@ -50,6 +50,7 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
 }
 
 void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
+    int sbrkTotal = 0;
     int numberOfBlocks = 0;
     if(numberOfRequestedBlocks <= (int) dataList.size()){
         numberOfBlocks = numberOfRequestedBlocks;
@@ -60,7 +61,6 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
     int id = 1;
     while(numberOfBlocks > 0){
         bool allocated = false;
-
         /* Get the data from the list of names
         and convert from string to cstring.*/
         string line = this->dataList.front();
@@ -72,6 +72,7 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
         /* Use sbrk to allocate memory chunk 
         for the cstring in the Memory Block */
         void* request = sbrk(size);
+        sbrkTotal+=size;
         strcpy((char*) request, data);
         cout << "Size required: " << size << endl;
         
@@ -102,7 +103,6 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
                         splitMemoryBlock->setData((char*) request);
                         splitMemoryBlock->setDataStartingAddress((char**) request);
                         mergeBlocks();
-
                         allocated = true;
                         cout << "Allocated" << endl;
                         break;
@@ -137,6 +137,6 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
         }
     }
 
-        
+    printDetails(FIRST_FIT_FILENAME, FIRST_FIT_LABEL, sbrkTotal);
    
 }
