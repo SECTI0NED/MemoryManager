@@ -4,7 +4,7 @@
 #ifndef MEMORY_BLOCK_H
 #define MEMORY_BLOCK_H
 
-#include "./Types.hpp"
+#include "./Utils.hpp"
 
 class MemoryBlock {
     public:

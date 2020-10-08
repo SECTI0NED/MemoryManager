@@ -16,28 +16,29 @@ class MemoryManager {
         many blocks are allocated and deleted while 
         there is still unallocated data */
         virtual void run(int allocate, int free);
+
         // For allocating memory
         virtual void allocateMemory(int blocks);
         
-        list<MemoryBlock*> test;
+     
 
     protected:
+        list<MemoryBlock*> allocMBList;
+        list<MemoryBlock*> freedMBList;
+
         // Local variable for the data
         list<string> dataList;
 
         // Merge consecutive blocks if they are free in freeMBList
         void mergeBlocks();
 
+        // Split block if its size meets its required data size
         MemoryBlock* splitBlock(list<MemoryBlock*>::iterator memoryBlockIter, int size);
 
         // Move memory blocks form allocMBList to freeMBList
         void freeMemory(int numberOfBlocks);
         
-    
-        list<MemoryBlock*> allocMBList;
-        list<MemoryBlock*> freedMBList;
-
-
+        void printDetails(string filename, string managerTypeLabel, int sbrkTotal);
 };
 
 #endif // MEMORY_MANAGER_H

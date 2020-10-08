@@ -46,7 +46,7 @@ void handleMemoryManager(string filename, string method) {
     // } else if(method == WORST_FIT) {
     //     memoryManager = make_shared<WorstFit>(data);
     // }
-    memoryManager->run(1000,500);
+    memoryManager->run(2,2);
     delete memoryManager;
 }
 

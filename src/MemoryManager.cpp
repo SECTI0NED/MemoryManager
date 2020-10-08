@@ -27,38 +27,39 @@ void MemoryManager::allocateMemory(int numberOfBlocks) {
 void MemoryManager::freeMemory(int numberOfBlocks) {
     if(numberOfBlocks <= (int) allocMBList.size()){
         while(numberOfBlocks > 0){
-        
-        /* Get random positon in allocMBList */
-        list<MemoryBlock*>::iterator randomPosition = allocMBList.begin();
-        int random = rand() % allocMBList.size();
-        std::advance(randomPosition, random);
+    
+            /* Get random positon in allocMBList */
+            list<MemoryBlock*>::iterator randomPosition = allocMBList.begin();
+            int random = rand() % allocMBList.size();
+            std::advance(randomPosition, random);
 
-        /* Get a random memory block from allocMBList */
-        MemoryBlock* memoryBlock = (*randomPosition);
-        
-        /* Clear the data while maintaining the size. */
-        memoryBlock->clearData();
+            /* Get a random memory block from allocMBList */
+            MemoryBlock* memoryBlock = (*randomPosition);
+            
+            /* Clear the data while maintaining the size. */
+            memoryBlock->clearData();
 
-        /* Add this block to the freedMBList*/
-        freedMBList.push_back(memoryBlock);
+            /* Add this block to the freedMBList*/
+            freedMBList.push_back(memoryBlock);
 
-        /* Remove the block from the allocMBList 
-        and reduce the amount of blocks to free*/
-        allocMBList.erase(randomPosition);
-        numberOfBlocks-=1;
+            /* Remove the block from the allocMBList 
+            and reduce the amount of blocks to free*/
+            allocMBList.erase(randomPosition);
+            numberOfBlocks-=1;
         }
 
-        /* Merge adjacent blocks */
+        /* Merge consecutive blocks */
         mergeBlocks();
+
     } else {
         cout << "Error number of blocks requested to be freed: " << numberOfBlocks << endl
-        << "Number of names in data list: " << dataList.size() << endl;
+             << "Number of names in data list: " << dataList.size() << endl;
     }
     
 }
 
 
-// For merging adjacent free blocks in freedMBList
+// For merging consecutive free blocks in freedMBList
 void MemoryManager::mergeBlocks() {
 
     list<MemoryBlock*>::iterator currentBlockPtr = freedMBList.begin();
@@ -70,32 +71,19 @@ void MemoryManager::mergeBlocks() {
         if((*currentBlockPtr)->isFree()){
             if((*nextBlockPtr)->isFree()) {
 
-                // Retrieve the new size of the memory block
+                /* Retrieve the new size of the memory block */
                 int currentBlockSize = (*currentBlockPtr)->getSize();
                 int nextBlockSize = (*nextBlockPtr)->getSize();
                 int newSize = currentBlockSize + nextBlockSize;
 
-                /* Reset the data to null and request a new memory 
-                chunk with the new size (this is  not necessary, 
-                but it's better than having the both the memory 
-                blocks' old data mixed together) */
-                char data[newSize];
-                for(int i = 0; i < newSize; ++i){
-                    data[i] = '\0';
-                }
-                void* request = sbrk(newSize);
-                strcpy((char*) request, data);
-
-                /* Set the current block's new size and data*/
+                /* Set the current block's new size */
                 (*currentBlockPtr)->setSize(newSize);
                 (*currentBlockPtr)->isFree(true);
-                (*currentBlockPtr)->setData((char*) request);
-                (*currentBlockPtr)->setDataStartingAddress((char**) request);
-
-                // Erase the next block
+           
+                /* Erase the next block */
                 freedMBList.erase(nextBlockPtr);
 
-                // Reset the next block pointer
+                /* Reset the next block pointer */
                 nextBlockPtr = freedMBList.end();
             }
         } else {
@@ -124,6 +112,34 @@ MemoryBlock* MemoryManager::splitBlock(list<MemoryBlock*>::iterator memoryBlockI
     freedMBList.insert(excessBlockPosition, excessBlock);
 
     return memoryBlock;
+}
+
+void MemoryManager::printDetails(string filename, string managerTypeLabel, int sbrkTotal){
+    ofstream fileStream(filename);
+    fileStream << managerTypeLabel << endl
+               << SBRK_TOTAL << "\t" << sbrkTotal << endl
+               << FREED_INFO << endl;
+               for(list<MemoryBlock*>::iterator mb = freedMBList.begin(); mb != freedMBList.end(); ++mb){
+                    fileStream << MEMORY_BLOCK_ADDRESS << '\t' 
+                    << (*mb)->getMemoryBlockAddress() << '\t'
+                    << MEMORY_BLOCK_SIZE << '\t'
+                    << (*mb)->getSize();
+                    if(!(*mb)->isFree()) {
+                        fileStream << '\t'  
+                        << CONTENTS_STARTING_ADDRESS << '\t'
+                        << (*mb)->getDataStartingAddress() << '\t'
+                        << MEMORY_BLOCK_CONTENTS << '\t';
+                        for(int i = 0; (*mb)->getData()[i] != '\0'; ++i){
+                            fileStream << (*mb)->getData()[i];
+                        }
+                        fileStream << endl;
+                    }
+               }
+               fileStream << ALLOC_INFO << endl;
+               for(list<MemoryBlock*>::iterator mb = allocMBList.begin(); mb != allocMBList.end(); ++mb) {
+                   fileStream << MEMORY_BLOCK_ADDRESS << '\t'
+                   
+               }
 }
 
 

@@ -1,13 +1,7 @@
-#include "Types.hpp"
+#include "Utils.hpp"
 #include "MemoryManager.hpp"
 #include "FirstFit.hpp"
 
-#define FIRST_FIT "ff"
-#define BEST_FIT "bf"
-#define WORST_FIT "wf"
-
-#define ALLOCATE 1000
-#define FREE 500
 
 
 /* For handling the Memory Manager*/

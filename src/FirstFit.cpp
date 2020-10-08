@@ -16,11 +16,11 @@ FirstFit::~FirstFit() {}
 void FirstFit::run(int allocateBlocks, int freeBlocks) {
 
     while(!dataList.empty()){
-        cout << "--Allocating data--" << endl;
+        cout << "[ Allocating data ]" << endl;
         allocateMemory(allocateBlocks);
 
         if(!dataList.empty()){
-            cout << "--Freeing memory blocks--"<< endl;
+            cout << "[ Deallocating data ]"<< endl;
             freeMemory(freeBlocks);
         }
         
@@ -28,8 +28,8 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
     cout << "**********************************" << endl;
     cout << "Alloc: " << endl;
     for(MemoryBlock* mb : allocMBList){
-        cout << "Memory Block ID: " << mb->getId() << endl;
-        cout << "Memory Block Data: " << endl;
+        cout << "Memory Block ID: " << mb->getId();
+        cout << ", Data: ";
         for(int i = 0; mb->getData()[i] != '\0'; ++i){
             cout << mb->getData()[i];
         }
@@ -37,15 +37,16 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
     }
     cout << "Freed: " << endl;
     for(MemoryBlock* mb : freedMBList){
-        cout << "Memory Block ID: " << mb->getId() << endl;
+        cout << "Memory Block ID: " << mb->getId();
         if(!mb->isFree()){
-            cout << "Memory Block Data: " << endl;
+            cout << ", Data: ";
             for(int i = 0; mb->getData()[i] != '\0'; ++i){
                 cout << mb->getData()[i];
             }
             cout << endl;
         }
     }
+    cout << endl;
 }
 
 void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
@@ -100,9 +101,6 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
                         splitMemoryBlock->isFree(false);
                         splitMemoryBlock->setData((char*) request);
                         splitMemoryBlock->setDataStartingAddress((char**) request);
-                        
-                        /* merge the excess block if it 
-                        adjacent to a cleared block */
                         mergeBlocks();
 
                         allocated = true;
@@ -126,6 +124,7 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
             memoryBlock->setData((char*) request);
             memoryBlock->setDataStartingAddress((char**) request);
             ++id;
+
             allocMBList.push_back(memoryBlock);
             cout << "Allocated" << endl;
             allocated = true;
@@ -139,6 +138,5 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
     }
 
         
-    
-    
+   
 }
