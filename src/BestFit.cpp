@@ -20,6 +20,7 @@ void BestFit::run(int allocateBlocks, int freeBlocks) {
             freeMemory(freeBlocks);
         }
     }
+    printDetails(BEST_FIT_FILENAME, BEST_FIT_LABEL, sbrkTotal);
 }
 
 void BestFit::allocateMemory(int numberOfRequestedBlocks) {
@@ -40,12 +41,10 @@ void BestFit::allocateMemory(int numberOfRequestedBlocks) {
         strcpy(cstring, line.c_str());
         const char* data = cstring;         // data in c-string
         int size = strlen(data) + 1;        // size of the data
-
-        /* Use sbrk to allocate memory chunk 
-        for the cstring in the Memory Block */
-        void* request = sbrk(size);
-        sbrkTotal+=size;
-        strcpy((char*) request, data);
+        for(int i = 0; i < size; ++i){
+            cout << data[i];
+        }
+        cout << endl;
 
         /* Decide where to allocate the information (allocMBList or freedMBList) */ 
         if(!freedMBList.empty()){
@@ -55,14 +54,12 @@ void BestFit::allocateMemory(int numberOfRequestedBlocks) {
                 MemoryBlock* memoryBlock = *memoryBlockPtr;
                 if(memoryBlock->getSize() == size){
                     memoryBlock->isFree(false);
-                    memoryBlock->setData((char*) request);
-                    memoryBlock->setDataStartingAddress((char**) request);
+                    memoryBlock->resetData(data);
                     allocated = true;
                 } else if(memoryBlock->getSize() > size){
                     MemoryBlock* splitMemoryBlock = splitBlock(memoryBlockPtr, size);
                     splitMemoryBlock->isFree(false);
-                    splitMemoryBlock->setData((char*) request);
-                    splitMemoryBlock->setDataStartingAddress((char**) request);
+                    memoryBlock->resetData(data);
                     mergeBlocks();
                     allocated = true;
                 }
@@ -72,7 +69,14 @@ void BestFit::allocateMemory(int numberOfRequestedBlocks) {
         /* If freedMBList is empty or the data has not been allocated 
         yet, then create a new memory block and add it to allocMBList. */
         if(freedMBList.empty() || !allocated){
-            MemoryBlock* memoryBlock = new MemoryBlock();  
+            MemoryBlock* memoryBlock = new MemoryBlock();
+
+            /* Use sbrk to allocate memory chunk 
+            for the cstring in the Memory Block */
+            void* request = sbrk(size);
+            sbrkTotal+=size;
+            strcpy((char*) request, data);
+
             memoryBlock->setId(id);
             memoryBlock->setSize(size);
             memoryBlock->isFree(false);
@@ -90,7 +94,6 @@ void BestFit::allocateMemory(int numberOfRequestedBlocks) {
             numberOfBlocks-=1;
         }
     }
-    printDetails(BEST_FIT_FILENAME, BEST_FIT_LABEL, sbrkTotal);
 }
 
 list<MemoryBlock*>::iterator BestFit::findBestFitBlock(int sizeRequired, bool* found) {

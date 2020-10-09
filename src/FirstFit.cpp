@@ -14,13 +14,13 @@ FirstFit::FirstFit(string filename) {
 FirstFit::~FirstFit() {}
 
 void FirstFit::run(int allocateBlocks, int freeBlocks) {
-
     while(!dataList.empty()){
         allocateMemory(allocateBlocks);
         if(!dataList.empty()){
             freeMemory(freeBlocks);
         }
     }
+    printDetails(FIRST_FIT_FILENAME, FIRST_FIT_LABEL, sbrkTotal);
 }
 
 void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
@@ -41,12 +41,6 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
         strcpy(cstring, line.c_str());
         const char* data = cstring;         // data in c-string
         int size = strlen(data) + 1;        // size of the data
-
-        /* Use sbrk to allocate memory chunk 
-        for the cstring in the Memory Block */
-        void* request = sbrk(size);
-        sbrkTotal+=size;
-        strcpy((char*) request, data);
         
         /* Decide where to allocate the information (allocMBList or freedMBList) */
         if(!freedMBList.empty()){
@@ -58,8 +52,7 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
                     then allocate the data to this block */
                     if(memoryBlock->getSize() == size) {
                         memoryBlock->isFree(false);
-                        memoryBlock->setData((char*) request);
-                        memoryBlock->setDataStartingAddress((char**) request);
+                        memoryBlock->resetData(data);
                         allocated = true;
                         break;
 
@@ -68,8 +61,7 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
                     } else if(memoryBlock->getSize() > size) {
                         MemoryBlock* splitMemoryBlock = splitBlock(mb, size);
                         splitMemoryBlock->isFree(false);
-                        splitMemoryBlock->setData((char*) request);
-                        splitMemoryBlock->setDataStartingAddress((char**) request);
+                        splitMemoryBlock->resetData(data);
                         mergeBlocks();
                         allocated = true;
                         break;
@@ -81,7 +73,14 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
         /* If freedMBList is empty or the data has not been allocated 
         yet, then create a new memory block and add it to allocMBList. */
         if(freedMBList.empty() || !allocated){
-            MemoryBlock* memoryBlock = new MemoryBlock();  
+            MemoryBlock* memoryBlock = new MemoryBlock(); 
+            
+            /* Use sbrk to allocate memory chunk 
+            for the cstring in the Memory Block */
+            void* request = sbrk(size);
+            sbrkTotal+=size;
+            strcpy((char*) request, data);
+
             memoryBlock->setId(id);
             memoryBlock->setSize(size);
             memoryBlock->isFree(false);
@@ -99,7 +98,4 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
             numberOfBlocks-=1;
         }
     }
-
-    printDetails(FIRST_FIT_FILENAME, FIRST_FIT_LABEL, sbrkTotal);
-   
 }

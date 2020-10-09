@@ -16,6 +16,15 @@ void MemoryBlock::setData(char* data) {
     this->data = data;
 }
 
+void MemoryBlock::resetData(const char* data){
+    int counter = 0;
+    while(counter < size) {
+        this->data[counter] = data[counter];
+        counter++;
+    }
+    this->data[size] = '\0';
+}
+
 void MemoryBlock::setDataStartingAddress(memory_address startingAddress) {
     this->startingAddress = startingAddress;
 }

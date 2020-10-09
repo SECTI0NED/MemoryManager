@@ -20,6 +20,7 @@ void WorstFit::run(int allocateBlocks, int freeBlocks) {
             freeMemory(freeBlocks);
         }
     }
+    printDetails(WORST_FIT_FILENAME, WORST_FIT_LABEL, sbrkTotal);
 }
 
 void WorstFit::allocateMemory(int numberOfRequestedBlocks) {
@@ -41,12 +42,6 @@ void WorstFit::allocateMemory(int numberOfRequestedBlocks) {
         const char* data = cstring;         // data in c-string
         int size = strlen(data) + 1;        // size of the data
 
-        /* Use sbrk to allocate memory chunk 
-        for the cstring in the Memory Block */
-        void* request = sbrk(size);
-        sbrkTotal+=size;
-        strcpy((char*) request, data);
-
         /* Decide where to allocate the information (allocMBList or freedMBList) */ 
         if(!freedMBList.empty()){
       
@@ -56,14 +51,12 @@ void WorstFit::allocateMemory(int numberOfRequestedBlocks) {
                 MemoryBlock* memoryBlock = *memoryBlockPtr;
                 if(memoryBlock->getSize() == size){
                     memoryBlock->isFree(false);
-                    memoryBlock->setData((char*) request);
-                    memoryBlock->setDataStartingAddress((char**) request);
+                    memoryBlock->resetData(data);
                     allocated = true;
                 } else if(memoryBlock->getSize() > size){
                     MemoryBlock* splitMemoryBlock = splitBlock(memoryBlockPtr, size);
                     splitMemoryBlock->isFree(false);
-                    splitMemoryBlock->setData((char*) request);
-                    splitMemoryBlock->setDataStartingAddress((char**) request);
+                    splitMemoryBlock->resetData(data);
                     mergeBlocks();
                     allocated = true;
                 }
@@ -74,6 +67,13 @@ void WorstFit::allocateMemory(int numberOfRequestedBlocks) {
         yet, then create a new memory block and add it to allocMBList. */
         if(freedMBList.empty() || !allocated){
             MemoryBlock* memoryBlock = new MemoryBlock();  
+
+            /* Use sbrk to allocate memory chunk 
+            for the cstring in the Memory Block */
+            void* request = sbrk(size);
+            sbrkTotal+=size;
+            strcpy((char*) request, data);
+
             memoryBlock->setId(id);
             memoryBlock->setSize(size);
             memoryBlock->isFree(false);
@@ -91,8 +91,7 @@ void WorstFit::allocateMemory(int numberOfRequestedBlocks) {
             numberOfBlocks-=1;
         }
     }
-    
-    printDetails(WORST_FIT_FILENAME, WORST_FIT_LABEL, sbrkTotal);
+
 }
 list<MemoryBlock*>::iterator WorstFit::findWorstFitBlock(int sizeRequired, bool* found) {
     list<MemoryBlock*>::iterator mb = freedMBList.begin();
