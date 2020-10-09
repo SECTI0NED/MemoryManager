@@ -20,7 +20,7 @@ void BestFit::run(int allocateBlocks, int freeBlocks) {
             freeMemory(freeBlocks);
         }
     }
-    printDetails(BEST_FIT_FILENAME, BEST_FIT_LABEL, sbrkTotal);
+    printDetails(BEST_FIT_FILENAME, BEST_FIT_LABEL);
 }
 
 void BestFit::allocateMemory(int numberOfRequestedBlocks) {
@@ -41,10 +41,7 @@ void BestFit::allocateMemory(int numberOfRequestedBlocks) {
         strcpy(cstring, line.c_str());
         const char* data = cstring;         // data in c-string
         int size = strlen(data) + 1;        // size of the data
-        for(int i = 0; i < size; ++i){
-            cout << data[i];
-        }
-        cout << endl;
+   
 
         /* Decide where to allocate the information (allocMBList or freedMBList) */ 
         if(!freedMBList.empty()){
@@ -113,3 +110,4 @@ list<MemoryBlock*>::iterator BestFit::findBestFitBlock(int sizeRequired, bool* f
     }
     return memoryBlockPtr;
 }
+

@@ -16,13 +16,19 @@ void MemoryBlock::setData(char* data) {
     this->data = data;
 }
 
+/* Had to resort to using sbrk here changing 
+the actual data resulted in segfaults */
 void MemoryBlock::resetData(const char* data){
-    int counter = 0;
-    while(counter < size) {
-        this->data[counter] = data[counter];
-        counter++;
-    }
-    this->data[size] = '\0';
+    void* request = sbrk(size);
+    strcpy((char*) request, data);
+    this->data = (char*) request;
+
+    // int counter = 0;
+    // while(counter < size) {
+    //     this->data[counter] = data[counter];
+    //     counter++;
+    // }
+    // this->data[size] = '\0';
 }
 
 void MemoryBlock::setDataStartingAddress(memory_address startingAddress) {
@@ -55,7 +61,7 @@ bool MemoryBlock::isFree() {
 
 void MemoryBlock::clearData() {
     int counter = 0;
-    while(data[counter] != '\0'){
+    while(counter <= size){
         data[counter] = '\0';
         counter++;
     }

@@ -20,7 +20,7 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
             freeMemory(freeBlocks);
         }
     }
-    printDetails(FIRST_FIT_FILENAME, FIRST_FIT_LABEL, sbrkTotal);
+    printDetails(FIRST_FIT_FILENAME, FIRST_FIT_LABEL);
 }
 
 void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
@@ -39,6 +39,7 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
         string line = this->dataList.front();
         char cstring[line.size()];
         strcpy(cstring, line.c_str());
+        
         const char* data = cstring;         // data in c-string
         int size = strlen(data) + 1;        // size of the data
         

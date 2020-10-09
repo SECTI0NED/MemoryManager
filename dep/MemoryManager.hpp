@@ -39,7 +39,7 @@ class MemoryManager {
         // Move memory blocks form allocMBList to freeMBList
         void freeMemory(int numberOfBlocks);
         
-        void printDetails(string filename, string managerTypeLabel, int sbrkTotal);
+        void printDetails(string filename, string managerTypeLabel);
 };
 
 #endif // MEMORY_MANAGER_H

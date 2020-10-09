@@ -20,7 +20,7 @@ void WorstFit::run(int allocateBlocks, int freeBlocks) {
             freeMemory(freeBlocks);
         }
     }
-    printDetails(WORST_FIT_FILENAME, WORST_FIT_LABEL, sbrkTotal);
+    printDetails(WORST_FIT_FILENAME, WORST_FIT_LABEL);
 }
 
 void WorstFit::allocateMemory(int numberOfRequestedBlocks) {
