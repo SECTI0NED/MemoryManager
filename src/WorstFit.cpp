@@ -49,11 +49,25 @@ void WorstFit::allocateMemory(int numberOfRequestedBlocks) {
 
         /* Decide where to allocate the information (allocMBList or freedMBList) */ 
         if(!freedMBList.empty()){
-            /* 
-                Go through entire list and find the LARGEST block that can store the data. 
-                If Block is NOT null then assign data (if block is null, then that means no satisfiable block was found)
-                Set allocated = true
-            */
+      
+            bool found = false;
+            list<MemoryBlock*>::iterator memoryBlockPtr = findWorstFitBlock(size, &found);
+            if(found){
+                MemoryBlock* memoryBlock = *memoryBlockPtr;
+                if(memoryBlock->getSize() == size){
+                    memoryBlock->isFree(false);
+                    memoryBlock->setData((char*) request);
+                    memoryBlock->setDataStartingAddress((char**) request);
+                    allocated = true;
+                } else if(memoryBlock->getSize() > size){
+                    MemoryBlock* splitMemoryBlock = splitBlock(memoryBlockPtr, size);
+                    splitMemoryBlock->isFree(false);
+                    splitMemoryBlock->setData((char*) request);
+                    splitMemoryBlock->setDataStartingAddress((char**) request);
+                    mergeBlocks();
+                    allocated = true;
+                }
+            }
         }
 
         /* If freedMBList is empty or the data has not been allocated 
@@ -79,4 +93,19 @@ void WorstFit::allocateMemory(int numberOfRequestedBlocks) {
     }
     
     printDetails(WORST_FIT_FILENAME, WORST_FIT_LABEL, sbrkTotal);
+}
+list<MemoryBlock*>::iterator WorstFit::findWorstFitBlock(int sizeRequired, bool* found) {
+    list<MemoryBlock*>::iterator mb = freedMBList.begin();
+    list<MemoryBlock*>::iterator memoryBlockPtr  = mb;
+    for(mb = freedMBList.begin(); mb != freedMBList.end(); ++mb){
+        if((*mb)->isFree()){
+            if(sizeRequired <= (*mb)->getSize()) {
+                if((*mb)->getSize() > (*memoryBlockPtr)->getSize()) {
+                    memoryBlockPtr = mb;
+                    *found = true;
+                }
+            } 
+        }
+    }
+    return memoryBlockPtr;
 }
