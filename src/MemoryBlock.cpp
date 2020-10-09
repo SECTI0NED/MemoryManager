@@ -16,7 +16,7 @@ void MemoryBlock::setData(char* data) {
     this->data = data;
 }
 
-/* Had to resort to using sbrk here changing 
+/* Had to resort to using sbrk here, changing 
 the actual data resulted in segfaults */
 void MemoryBlock::resetData(const char* data){
     void* request = sbrk(size);
