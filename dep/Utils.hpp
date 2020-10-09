@@ -30,8 +30,8 @@ using std::ofstream;
 #define BEST_FIT "bf"
 #define WORST_FIT "wf"
 
-#define ALLOCATE 1
-#define FREE 2
+#define ALLOCATE 1000
+#define FREE 500
 
 #define FIRST_FIT_FILENAME "_firstfit.txt"
 #define BEST_FIT_FILENAME "_bestfit.txt"
