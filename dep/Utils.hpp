@@ -30,16 +30,16 @@ using std::ofstream;
 #define BEST_FIT "bf"
 #define WORST_FIT "wf"
 
-#define ALLOCATE 1000
-#define FREE 500
+#define ALLOCATE 2
+#define FREE 2
 
-#define FIRST_FIT_FILENAME "firstfit_result.txt"
-#define BEST_FIT_FILENAME "bestfit_result.txt"
-#define WORST_FIT_FILENAME "worstfit_result.txt"
+#define FIRST_FIT_FILENAME "_firstfit.txt"
+#define BEST_FIT_FILENAME "_bestfit.txt"
+#define WORST_FIT_FILENAME "_worstfit.txt"
 
-#define FIRST_FIT_LABEL "[FIRST FIT]"
-#define BEST_FIT_LABEL "[BEST FIT]"
-#define WORST_FIT_LABEL "[WORST FIT]"
+#define FIRST_FIT_LABEL "FIRST FIT"
+#define BEST_FIT_LABEL "BEST FIT"
+#define WORST_FIT_LABEL "WORST FIT"
 
 #define SBRK_TOTAL "[TOTAL MEMORY ALLOCATED BY SBRK]:"
 #define FREED_INFO "[FREED MEMORY BLOCK LIST]"

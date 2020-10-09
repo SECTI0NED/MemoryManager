@@ -23,6 +23,7 @@ class MemoryManager {
      
 
     protected:
+        int sbrkTotal;
         list<MemoryBlock*> allocMBList;
         list<MemoryBlock*> freedMBList;
 

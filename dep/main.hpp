@@ -1,6 +1,8 @@
 #include "Utils.hpp"
 #include "MemoryManager.hpp"
 #include "FirstFit.hpp"
+#include "BestFit.hpp"
+#include "WorstFit.hpp"
 
 
 

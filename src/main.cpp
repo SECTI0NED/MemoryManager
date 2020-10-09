@@ -40,12 +40,11 @@ void handleMemoryManager(string filename, string method) {
     MemoryManager* memoryManager = nullptr;
     if(method == FIRST_FIT){
         memoryManager = new FirstFit(filename);
-    } 
-    // else if(method == BEST_FIT) {
-    //     memoryManager = make_shared<BestFit>(data);
-    // } else if(method == WORST_FIT) {
-    //     memoryManager = make_shared<WorstFit>(data);
-    // }
+    } else if(method == BEST_FIT) {
+        memoryManager = new BestFit(filename);
+    } else if(method == WORST_FIT) {
+        memoryManager = new WorstFit(filename);
+    }
     memoryManager->run(ALLOCATE,FREE);
     delete memoryManager;
 }

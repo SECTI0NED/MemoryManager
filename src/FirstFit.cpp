@@ -1,6 +1,7 @@
 #include "../dep/FirstFit.hpp"
 
 FirstFit::FirstFit(string filename) {
+    sbrkTotal = 0;
     ifstream stream(filename);
     string line = "";
     while(!stream.eof()){
@@ -23,7 +24,6 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
 }
 
 void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
-    int sbrkTotal = 0;
     int numberOfBlocks = 0;
     if(numberOfRequestedBlocks <= (int) dataList.size()){
         numberOfBlocks = numberOfRequestedBlocks;

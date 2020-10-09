@@ -1,6 +1,7 @@
 #include "../dep/BestFit.hpp"
 
 BestFit::BestFit(string filename){
+    sbrkTotal = 0;
     ifstream stream(filename);
     string line = "";
     while(!stream.eof()){
@@ -22,7 +23,6 @@ void BestFit::run(int allocateBlocks, int freeBlocks) {
 }
 
 void BestFit::allocateMemory(int numberOfRequestedBlocks) {
-    int sbrkTotal = 0;
     int numberOfBlocks = 0;
     if(numberOfRequestedBlocks <= (int) dataList.size()){
         numberOfBlocks = numberOfRequestedBlocks;
@@ -99,7 +99,9 @@ list<MemoryBlock*>::iterator BestFit::findBestFitBlock(int sizeRequired, bool* f
     for(mb = freedMBList.begin(); mb != freedMBList.end(); ++mb){
         if((*mb)->isFree()){
             if(sizeRequired <= (*mb)->getSize()) {
-                if((*mb)->getSize() < (*memoryBlockPtr)->getSize()) {
+                 memoryBlockPtr = mb;
+                *found = true;
+                if((*mb)->getSize() <= (*memoryBlockPtr)->getSize()) {
                     memoryBlockPtr = mb;
                     *found = true;
                 }

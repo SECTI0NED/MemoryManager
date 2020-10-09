@@ -6,6 +6,7 @@ MemoryManager::~MemoryManager() {}
 
 
 MemoryManager::MemoryManager(string filename) {
+    sbrkTotal = 0;
     ifstream stream(filename);
     string line = "";
     while(!stream.eof()){
@@ -53,7 +54,7 @@ void MemoryManager::freeMemory(int numberOfBlocks) {
 
     } else {
         cout << "Error number of blocks requested to be freed: " << numberOfBlocks << endl
-             << "Number of names in data list: " << dataList.size() << endl;
+             << "Number of names in allocMBList list: " << allocMBList.size() << endl;
     }
     
 }
