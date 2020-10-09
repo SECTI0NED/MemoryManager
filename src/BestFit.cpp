@@ -56,7 +56,7 @@ void BestFit::allocateMemory(int numberOfRequestedBlocks) {
                 } else if(memoryBlock->getSize() > size){
                     MemoryBlock* splitMemoryBlock = splitBlock(memoryBlockPtr, size);
                     splitMemoryBlock->isFree(false);
-                    memoryBlock->resetData(data);
+                    splitMemoryBlock->resetData(data);
                     mergeBlocks();
                     allocated = true;
                 }

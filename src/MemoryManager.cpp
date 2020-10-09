@@ -25,37 +25,39 @@ void MemoryManager::allocateMemory(int numberOfBlocks) {
 }
 
 /* Need to select random block from allocMBList */
-void MemoryManager::freeMemory(int numberOfBlocks) {
-    if(numberOfBlocks <= (int) allocMBList.size()){
-        while(numberOfBlocks > 0){
-    
-            /* Get random positon in allocMBList */
-            list<MemoryBlock*>::iterator randomPosition = allocMBList.begin();
-            int random = rand() % allocMBList.size();
-            std::advance(randomPosition, random);
-
-            /* Get a random memory block from allocMBList */
-            MemoryBlock* memoryBlock = (*randomPosition);
-            
-            /* Clear the data while maintaining the size. */
-            memoryBlock->clearData();
-
-            /* Add this block to the freedMBList*/
-            freedMBList.push_back(memoryBlock);
-
-            /* Remove the block from the allocMBList 
-            and reduce the amount of blocks to free*/
-            allocMBList.erase(randomPosition);
-            numberOfBlocks-=1;
-        }
-
-        /* Merge consecutive blocks */
-        mergeBlocks();
-
+void MemoryManager::freeMemory(int numberOfRequestedBlocks) {
+    int numberOfBlocks = 0;
+    if(numberOfRequestedBlocks  <= (int) allocMBList.size()){
+        numberOfBlocks = numberOfRequestedBlocks;
     } else {
-        cout << "Error number of blocks requested to be freed: " << numberOfBlocks << endl
-             << "Number of names in allocMBList list: " << allocMBList.size() << endl;
+        numberOfBlocks = allocMBList.size();
     }
+
+    while(numberOfBlocks > 0){
+    
+        /* Get random positon in allocMBList */
+        list<MemoryBlock*>::iterator randomPosition = allocMBList.begin();
+        int random = rand() % allocMBList.size();
+        std::advance(randomPosition, random);
+
+        /* Get a random memory block from allocMBList */
+        MemoryBlock* memoryBlock = (*randomPosition);
+        
+        /* Clear the data while maintaining the size. */
+        memoryBlock->clearData();
+
+        /* Add this block to the freedMBList*/
+        freedMBList.push_back(memoryBlock);
+
+        /* Remove the block from the allocMBList 
+        and reduce the amount of blocks to free*/
+        allocMBList.erase(randomPosition);
+        numberOfBlocks-=1;
+    }
+
+    /* Merge consecutive blocks */
+    mergeBlocks();
+
     
 }
 

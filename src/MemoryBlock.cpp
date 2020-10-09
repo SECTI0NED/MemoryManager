@@ -22,6 +22,7 @@ void MemoryBlock::resetData(const char* data){
     void* request = sbrk(size);
     strcpy((char*) request, data);
     this->data = (char*) request;
+    this->startingAddress = (char**) request;
 
     // int counter = 0;
     // while(counter < size) {
