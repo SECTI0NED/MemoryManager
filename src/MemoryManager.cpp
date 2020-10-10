@@ -191,12 +191,13 @@ MemoryBlock* MemoryManager::splitBlock(list<MemoryBlock*>::iterator memoryBlockI
 /* For printing details */
 void MemoryManager::printDetails(string filename, string managerTypeLabel){
     ofstream fileStream(filename);
-    fileStream << managerTypeLabel << endl
-    << SBRK_TOTAL << "\t\t" << sbrkTotal << endl
+    fileStream << TITLE << "\t\t\t\t\t" << managerTypeLabel << endl
+    << SBRK_TOTAL << "\t\t" << sbrkTotal << " bytes" << endl
+    << FREED_SIZE << "\t\t\t" << freedMBList.size() << endl
+    << ALLOC_SIZE << "\t\t\t" << allocMBList.size() << endl
     << SPLIT << "\t\t" << splitTotal << endl
     << MERGED << "\t\t" <<  mergeTotal << endl
-    << FREED_SIZE << "\t\t\t\t\t\t" << freedMBList.size() << endl
-    << ALLOC_SIZE << "\t\t\t\t\t\t" << allocMBList.size() << endl
+
     << endl
     << LINE_BREAK << endl;
     fileStream << FREED_TITLE << endl;

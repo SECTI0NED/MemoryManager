@@ -37,16 +37,18 @@ using std::ofstream;
 #define BEST_FIT_FILENAME "_bestfit.txt"
 #define WORST_FIT_FILENAME "_worstfit.txt"
 
-#define FIRST_FIT_LABEL "FIRST FIT"
-#define BEST_FIT_LABEL "BEST FIT"
-#define WORST_FIT_LABEL "WORST FIT"
+
+#define FIRST_FIT_LABEL "First Fit"
+#define BEST_FIT_LABEL "Best Fit"
+#define WORST_FIT_LABEL "Worst Fit"
 
 #define FREED_TITLE "freedMBList:"
 #define ALLOC_TITLE "allocMBList:"
 
+#define TITLE "[MEMORY MANAGER TYPE]"
 #define SBRK_TOTAL "[TOTAL MEMORY ALLOCATED BY SBRK]:"
-#define FREED_SIZE "[FREEDMBLIST SIZE]:"
-#define ALLOC_SIZE "[ALLOCMBLIST SIZE]:"
+#define FREED_SIZE "[NO. OF BLOCKS IN FREEDMBLIST]:"
+#define ALLOC_SIZE "[NO. OF BLOCKS IN ALLOCMBLIST]:"
 #define MEMORY_BLOCK_ADDRESS "[MEMORY BLOCK ADDRESS]:"
 #define MEMORY_BLOCK_SIZE "[SIZE]:"
 #define MEMORY_BLOCK_CONTENTS "[CONTENTS]:"
