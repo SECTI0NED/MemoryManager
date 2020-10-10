@@ -17,9 +17,7 @@ class MemoryManager {
         there is still unallocated data */
         virtual void run(int allocate, int free);
 
-        // For allocating memory
-        virtual void allocateMemory(int numberOfBlocks);
-        
+        virtual list<MemoryBlock*>::iterator retrieveBlock(int sizeRequired, bool* found);
      
 
     protected:
@@ -45,9 +43,13 @@ class MemoryManager {
         // Split block if its size meets its required data size
         MemoryBlock* splitBlock(list<MemoryBlock*>::iterator memoryBlockIter, int size);
 
+        // For allocating memory
+        void allocateMemory(int numberOfBlocks);
+
         // Move memory blocks form allocMBList to freeMBList
         void freeMemory(int numberOfBlocks);
         
+        // Printing details
         void printDetails(string filename, string managerTypeLabel);
 };
 
