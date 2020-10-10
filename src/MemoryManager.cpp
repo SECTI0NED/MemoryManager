@@ -192,7 +192,7 @@ MemoryBlock* MemoryManager::splitBlock(list<MemoryBlock*>::iterator memoryBlockI
 /* For printing details to file*/
 void MemoryManager::printDetails(string filename, string managerTypeLabel){
     ofstream fileStream(filename);
-    fileStream << DATA_SOURCE_FILE << "\t\t\t\t" << dataSourceFile << endl
+    fileStream << DATA_SOURCE_FILE << "\t\t\t" << dataSourceFile << endl
     << TITLE << "\t\t\t" << managerTypeLabel << endl
     << SBRK_TOTAL << "\t\t" << sbrkTotal << " bytes" << endl
     << FREED_SIZE << "\t\t\t" << freedMBList.size() << endl
