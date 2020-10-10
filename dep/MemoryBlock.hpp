@@ -25,13 +25,10 @@ class MemoryBlock {
         bool isFree();
         MemoryBlock* getMemoryBlockAddress();
 
-
         // For debugging
         void setId(int id);
         int getId();
-          
-
-
+        
     private:
         memory_address startingAddress;
         char* data;

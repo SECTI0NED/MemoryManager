@@ -1,6 +1,7 @@
 #include "../dep/FirstFit.hpp"
 
 FirstFit::FirstFit(string filename) {
+    dataSourceFile = filename;
     sbrkTotal = 0;
     ifstream stream(filename);
     string line = "";
@@ -21,6 +22,7 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
         }
     }
     printDetails(FIRST_FIT_FILENAME, FIRST_FIT_LABEL);
+    printDetailsConsole(FIRST_FIT_FILENAME, FIRST_FIT_LABEL);
 }
 
 list<MemoryBlock*>::iterator FirstFit::retrieveBlock(int sizeRequired, bool* found) {

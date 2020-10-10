@@ -6,6 +6,7 @@ MemoryManager::~MemoryManager() {}
 
 
 MemoryManager::MemoryManager(string filename) {
+    dataSourceFile = filename;
     sbrkTotal = 0;
     ifstream stream(filename);
     string line = "";
@@ -188,16 +189,16 @@ MemoryBlock* MemoryManager::splitBlock(list<MemoryBlock*>::iterator memoryBlockI
     return memoryBlock;
 }
 
-/* For printing details */
+/* For printing details to file*/
 void MemoryManager::printDetails(string filename, string managerTypeLabel){
     ofstream fileStream(filename);
-    fileStream << TITLE << "\t\t\t" << managerTypeLabel << endl
+    fileStream << DATA_SOURCE_FILE << "\t\t\t\t" << dataSourceFile << endl
+    << TITLE << "\t\t\t" << managerTypeLabel << endl
     << SBRK_TOTAL << "\t\t" << sbrkTotal << " bytes" << endl
     << FREED_SIZE << "\t\t\t" << freedMBList.size() << endl
     << ALLOC_SIZE << "\t\t\t" << allocMBList.size() << endl
     << SPLIT << "\t\t" << splitTotal << endl
     << MERGED << "\t\t" <<  mergeTotal << endl
-
     << endl
     << LINE_BREAK << endl;
     fileStream << FREED_TITLE << endl;
@@ -220,7 +221,7 @@ void MemoryManager::printDetails(string filename, string managerTypeLabel){
             fileStream << endl;
         }
     }
-    fileStream << endl;
+    fileStream << endl << LINE_BREAK << endl;
     fileStream << ALLOC_TITLE << endl;
     for(list<MemoryBlock*>::iterator mb = allocMBList.begin(); mb != allocMBList.end(); ++mb) {
         fileStream << MEMORY_BLOCK_ADDRESS << '\t'
@@ -239,4 +240,17 @@ void MemoryManager::printDetails(string filename, string managerTypeLabel){
     fileStream.close();
 }
 
-
+/* For printing details to console */
+void MemoryManager::printDetailsConsole(string filename, string managerTypeLabel){
+    cout << LINE_BREAK_SHORT << endl;
+    cout << TITLE << "\t\t\t" << managerTypeLabel << endl
+         << SBRK_TOTAL << "\t\t" << sbrkTotal << " bytes" << endl
+         << FREED_SIZE << "\t\t\t" << freedMBList.size() << endl
+         << ALLOC_SIZE << "\t\t\t" << allocMBList.size() << endl
+         << SPLIT << "\t\t" << splitTotal << endl
+         << MERGED << "\t\t" <<  mergeTotal << endl
+         << endl
+         << "See '" << filename << "' for more details." << endl
+         << endl;
+    cout << LINE_BREAK_SHORT << endl;
+}

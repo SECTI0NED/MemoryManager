@@ -21,7 +21,6 @@ class MemoryManager {
      
 
     protected:
-
         // Number of times blocks were merged in freedMBList
         int mergeTotal;
         
@@ -49,8 +48,14 @@ class MemoryManager {
         // Move memory blocks form allocMBList to freeMBList
         void freeMemory(int numberOfBlocks);
         
-        // Printing details
+        // For printing details to file
         void printDetails(string filename, string managerTypeLabel);
+
+        // For printing details to console
+        void printDetailsConsole(string filename, string managerTypeLabel);
+
+        // Name of the file for the data
+        string dataSourceFile;
 };
 
 #endif // MEMORY_MANAGER_H

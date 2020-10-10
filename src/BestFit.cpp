@@ -1,6 +1,7 @@
 #include "../dep/BestFit.hpp"
 
 BestFit::BestFit(string filename){
+    dataSourceFile = filename;
     sbrkTotal = 0;
     ifstream stream(filename);
     string line = "";
@@ -21,6 +22,7 @@ void BestFit::run(int allocateBlocks, int freeBlocks) {
         }
     }
     printDetails(BEST_FIT_FILENAME, BEST_FIT_LABEL);
+    printDetailsConsole(BEST_FIT_FILENAME, BEST_FIT_LABEL);
 }
 
 

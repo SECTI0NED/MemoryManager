@@ -33,10 +33,9 @@ using std::ofstream;
 #define ALLOCATE 1000
 #define FREE 500
 
-#define FIRST_FIT_FILENAME "_firstfit.txt"
-#define BEST_FIT_FILENAME "_bestfit.txt"
-#define WORST_FIT_FILENAME "_worstfit.txt"
-
+#define FIRST_FIT_FILENAME "results_firstfit.txt"
+#define BEST_FIT_FILENAME "results_bestfit.txt"
+#define WORST_FIT_FILENAME "results_worstfit.txt"
 
 #define FIRST_FIT_LABEL "First Fit"
 #define BEST_FIT_LABEL "Best Fit"
@@ -55,9 +54,9 @@ using std::ofstream;
 #define CONTENTS_STARTING_ADDRESS "[CONTENTS STARTING ADDRESS]:"
 #define MERGED "[NO. OF TIMES BLOCKS WERE MERGED]:"
 #define SPLIT "[NO. OF TIMES BLOCKS WERE SPLIT]:"
-
+#define DATA_SOURCE_FILE "[DATA SOURCE FILE NAME]:"
 #define LINE_BREAK "********************************************************************************************************************************************" 
-
+#define LINE_BREAK_SHORT "**********************************************************************"
 /***************************************TYPEDEFS**************************************/
 
 typedef char** memory_address;
