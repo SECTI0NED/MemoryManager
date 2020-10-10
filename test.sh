@@ -7,6 +7,6 @@
 # ./program _data/test/test2.txt wf
 
 # ./program _data/test/test3.txt ff
-./program _data/test/test3.txt bf > results.txt
+# ./program _data/test/test3.txt bf 
 # ./program _data/test/test3.txt wf
 
