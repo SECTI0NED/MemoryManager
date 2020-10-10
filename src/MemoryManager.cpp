@@ -42,12 +42,7 @@ void MemoryManager::freeMemory(int numberOfRequestedBlocks) {
         
         /* Get a random memory block from allocMBList */
         MemoryBlock* memoryBlock = (*randomPosition);
-        cout << "Freeing" << endl;
-        cout <<  "\t";
-        for(int i = 0; memoryBlock->getData()[i] != '\0'; ++i){
-            cout << memoryBlock->getData()[i];
-        }
-        cout << endl;
+    
         memoryBlock->isFree(true);
 
         /* Add this block to the freedMBList*/
@@ -89,7 +84,8 @@ void MemoryManager::mergeBlocks() {
             mergeTotal++;
            
         } else {
-            /* If current block and next is not free, move to the next block.*/
+            /* If current and next block is not free, 
+            move current block pointer to the next one.*/
             currentBlockPtr = nextBlockPtr;
         }
     }

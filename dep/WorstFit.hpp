@@ -10,6 +10,7 @@ class WorstFit : public MemoryManager {
         void run(int allocate, int free);
     private:
         list<MemoryBlock*>::iterator findWorstFitBlock(int sizeRequired, bool* found);
+        list<MemoryBlock*>::iterator retrieveBlock(int sizeRequired, bool* found);
 };
 
 #endif // WORST_FIT_H

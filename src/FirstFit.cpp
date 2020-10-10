@@ -45,28 +45,19 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
         
         /* Decide where to allocate the information (allocMBList or freedMBList) */
         if(!freedMBList.empty()){
-            list<MemoryBlock*>::iterator mb;
-            for(mb = freedMBList.begin(); mb != freedMBList.end(); ++mb) {
-                MemoryBlock* memoryBlock = (*mb);
-                if(memoryBlock->isFree()) {
-                    /* If the block is the same size needed, 
-                    then allocate the data to this block */
-                    if(memoryBlock->getSize() == size) {
-                        memoryBlock->isFree(false);
-                        memoryBlock->resetData(data);
-                        allocated = true;
-                        break;
-
-                    /* If the block has a larger size than needed, 
-                    then split the block to get the required size*/
-                    } else if(memoryBlock->getSize() > size) {
-                        MemoryBlock* splitMemoryBlock = splitBlock(mb, size);
-                        splitMemoryBlock->isFree(false);
-                        splitMemoryBlock->resetData(data);
-                        mergeBlocks();
-                        allocated = true;
-                        break;
-                    }
+            bool found = false;
+            list<MemoryBlock*>::iterator memoryBlockPtr = retrieveBlock(size, &found);
+            if(found){
+                MemoryBlock* memoryBlock = *memoryBlockPtr;
+                if(memoryBlock->getSize() == size){
+                    memoryBlock->isFree(false);
+                    memoryBlock->resetData(data);
+                    allocated = true;
+                } else if(memoryBlock->getSize() > size){
+                    MemoryBlock* splitMemoryBlock = splitBlock(memoryBlockPtr, size);
+                    splitMemoryBlock->isFree(false);
+                    splitMemoryBlock->resetData(data);
+                    allocated = true;
                 }
             }
         }
@@ -99,4 +90,28 @@ void FirstFit::allocateMemory(int numberOfRequestedBlocks) {
             numberOfBlocks-=1;
         }
     }
+}
+
+list<MemoryBlock*>::iterator FirstFit::retrieveBlock(int sizeRequired, bool* found) {
+    list<MemoryBlock*>::iterator memoryBlockPtr = findFirstFitBlock(sizeRequired, found);
+    if(*found == false){
+       mergeBlocks();
+       memoryBlockPtr = findFirstFitBlock(sizeRequired, found);
+    }
+    return memoryBlockPtr;
+}
+
+list<MemoryBlock*>::iterator FirstFit::findFirstFitBlock(int sizeRequired, bool* found) {
+    list<MemoryBlock*>::iterator mb = freedMBList.begin();
+    list<MemoryBlock*>::iterator memoryBlockPtr  = mb;
+    for(mb = freedMBList.begin(); mb != freedMBList.end(); ++mb){
+        if((*mb)->isFree()){
+            if((*mb)->getSize() >= sizeRequired) {
+                memoryBlockPtr = mb;
+                *found = true;
+                break;
+            } 
+        }
+    }
+    return memoryBlockPtr;
 }

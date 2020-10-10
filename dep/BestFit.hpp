@@ -10,6 +10,7 @@ class BestFit : public MemoryManager {
         void run(int allocate, int free);
     private:
         list<MemoryBlock*>::iterator findBestFitBlock(int sizeRequired, bool* found);
+        list<MemoryBlock*>::iterator retrieveBlock(int sizeRequired, bool* found);
 };
 
 #endif // BEST_FIT_H
