@@ -16,11 +16,11 @@ MemoryManager::MemoryManager(string filename) {
     stream.close();
 }
 
-void MemoryManager::run(int allocate, int free) {
-    // Each Memory Manager will have its own implementation of run().
-}
+// Each Memory Manager will have its own implementation of run().
+void MemoryManager::run(int allocate, int free) {}
+
+ // Each Memory Manager will have its own implementation of retreiveBlock().
 list<MemoryBlock*>::iterator MemoryManager::retrieveBlock(int sizeRequired, bool* found) {
-     // Each Memory Manager will have its own implementation of retreiveBlock().
      *found = false;
      return freedMBList.begin();
 }
@@ -94,7 +94,7 @@ void MemoryManager::allocateMemory(int numberOfRequestedBlocks) {
     }
 }
 
-/* Need to select random block from allocMBList */
+/* For 'freeing' memory (moving a block from allocMBList to freedMBList) */
 void MemoryManager::freeMemory(int numberOfRequestedBlocks) {
     int numberOfBlocks = 0;
     if(numberOfRequestedBlocks  <= (int) allocMBList.size()){
@@ -104,7 +104,6 @@ void MemoryManager::freeMemory(int numberOfRequestedBlocks) {
     }
 
     while(numberOfBlocks > 0){
-    
         /* Get random positon in allocMBList */
         list<MemoryBlock*>::iterator randomPosition = allocMBList.begin();
         int random = rand() % allocMBList.size();
@@ -193,11 +192,14 @@ MemoryBlock* MemoryManager::splitBlock(list<MemoryBlock*>::iterator memoryBlockI
 void MemoryManager::printDetails(string filename, string managerTypeLabel){
     ofstream fileStream(filename);
     fileStream << managerTypeLabel << endl
-    << "[NO. OF TIMES BLOCKS WERE SPLIT]: " << splitTotal << endl
-    << "[NO. OF TIMES BLOCKS WERE MERGED]: " << mergeTotal << endl
-    << SBRK_TOTAL << "\t" << sbrkTotal << endl
-    << LINE_BREAK << endl
-    << FREED_INFO << " - Size: " << freedMBList.size() << endl;
+    << SBRK_TOTAL << "\t\t" << sbrkTotal << endl
+    << SPLIT << "\t\t" << splitTotal << endl
+    << MERGED << "\t\t" <<  mergeTotal << endl
+    << FREED_SIZE << "\t\t\t\t\t\t" << freedMBList.size() << endl
+    << ALLOC_SIZE << "\t\t\t\t\t\t" << allocMBList.size() << endl
+    << endl
+    << LINE_BREAK << endl;
+    fileStream << FREED_TITLE << endl;
     for(list<MemoryBlock*>::iterator mb = freedMBList.begin(); mb != freedMBList.end(); ++mb){
         fileStream << MEMORY_BLOCK_ADDRESS << '\t' 
         << (*mb)->getMemoryBlockAddress()
@@ -218,7 +220,7 @@ void MemoryManager::printDetails(string filename, string managerTypeLabel){
         }
     }
     fileStream << endl;
-    fileStream << ALLOC_INFO << " - Size: " << allocMBList.size() << endl;
+    fileStream << ALLOC_TITLE << endl;
     for(list<MemoryBlock*>::iterator mb = allocMBList.begin(); mb != allocMBList.end(); ++mb) {
         fileStream << MEMORY_BLOCK_ADDRESS << '\t'
         << (*mb)->getMemoryBlockAddress() 

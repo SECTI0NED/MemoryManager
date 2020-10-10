@@ -41,16 +41,20 @@ using std::ofstream;
 #define BEST_FIT_LABEL "BEST FIT"
 #define WORST_FIT_LABEL "WORST FIT"
 
-#define FREED_INFO "FREED MEMORY BLOCK LIST"
-#define ALLOC_INFO "ALLOCATED MEMORY BLOCK LIST"
-#define SBRK_TOTAL "[TOTAL MEMORY ALLOCATED BY SBRK]:"
+#define FREED_TITLE "freedMBList:"
+#define ALLOC_TITLE "allocMBList:"
 
+#define SBRK_TOTAL "[TOTAL MEMORY ALLOCATED BY SBRK]:"
+#define FREED_SIZE "[FREEDMBLIST SIZE]:"
+#define ALLOC_SIZE "[ALLOCMBLIST SIZE]:"
 #define MEMORY_BLOCK_ADDRESS "[MEMORY BLOCK ADDRESS]:"
 #define MEMORY_BLOCK_SIZE "[SIZE]:"
 #define MEMORY_BLOCK_CONTENTS "[CONTENTS]:"
 #define CONTENTS_STARTING_ADDRESS "[CONTENTS STARTING ADDRESS]:"
+#define MERGED "[NO. OF TIMES BLOCKS WERE MERGED]:"
+#define SPLIT "[NO. OF TIMES BLOCKS WERE SPLIT]:"
 
-#define LINE_BREAK "***********************************************************************************" 
+#define LINE_BREAK "********************************************************************************************************************************************" 
 
 /***************************************TYPEDEFS**************************************/
 
