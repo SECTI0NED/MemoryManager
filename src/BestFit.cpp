@@ -43,10 +43,12 @@ void BestFit::allocateMemory(int numberOfRequestedBlocks) {
         strcpy(cstring, line.c_str());
         const char* data = cstring;         // data in c-string
         int size = strlen(data) + 1;        // size of the data
-   
+        cout << "Allocating" << endl;
+        cout << "\t";
+        cout << line << endl;
 
         /* Decide where to allocate the information (allocMBList or freedMBList) */ 
-        if(!freedMBList.empty()){
+        if(!freedMBList.empty() && freedMBList.size() != 0){
             bool found = false;
             list<MemoryBlock*>::iterator memoryBlockPtr = findBestFitBlock(size, &found);
             if(found){
@@ -59,7 +61,9 @@ void BestFit::allocateMemory(int numberOfRequestedBlocks) {
                     MemoryBlock* splitMemoryBlock = splitBlock(memoryBlockPtr, size);
                     splitMemoryBlock->isFree(false);
                     splitMemoryBlock->resetData(data);
+                    cout << "Merging" << endl;
                     mergeBlocks();
+                    cout << "Merge complete" << endl;
                     allocated = true;
                 }
             }
@@ -101,12 +105,12 @@ list<MemoryBlock*>::iterator BestFit::findBestFitBlock(int sizeRequired, bool* f
     for(mb = freedMBList.begin(); mb != freedMBList.end(); ++mb){
         if((*mb)->isFree()){
             if(sizeRequired <= (*mb)->getSize()) {
-                 memoryBlockPtr = mb;
-                *found = true;
                 if((*mb)->getSize() <= (*memoryBlockPtr)->getSize()) {
                     memoryBlockPtr = mb;
                     *found = true;
                 }
+                memoryBlockPtr = mb;
+                *found = true;
             } 
         }
     }

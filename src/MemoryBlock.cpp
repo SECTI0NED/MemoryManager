@@ -60,9 +60,6 @@ bool MemoryBlock::isFree() {
     return blockIsFree;
 }
 
-void MemoryBlock::clearData() {
-    blockIsFree = true;
-}
 
 MemoryBlock* MemoryBlock::getMemoryBlockAddress() {
     return this;

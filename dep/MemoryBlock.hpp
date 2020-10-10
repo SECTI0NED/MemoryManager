@@ -16,19 +16,20 @@ class MemoryBlock {
         void setData(char* data);
         void resetData(const char* data);
         void setSize(int size);
-        void setId(int id);
         void isFree(bool blockIsFree);
         
         //Getters
         memory_address getDataStartingAddress();
         char* getData();
         int getSize();
-        int getId();
         bool isFree();
         MemoryBlock* getMemoryBlockAddress();
 
-        // Reset data to \0
-        void clearData();
+
+        // For debugging
+        void setId(int id);
+        int getId();
+          
 
 
     private:

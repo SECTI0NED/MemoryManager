@@ -23,7 +23,16 @@ class MemoryManager {
      
 
     protected:
+
+        // Number of times blocks were merged in freedMBList
+        int mergeTotal;
+        
+        // Number of times blocks were split in freedMBList
+        int splitTotal;
+
+        // Total emmory allocated by sbrk in allocMBList
         int sbrkTotal;
+
         list<MemoryBlock*> allocMBList;
         list<MemoryBlock*> freedMBList;
 
