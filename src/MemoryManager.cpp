@@ -141,7 +141,7 @@ void MemoryManager::printDetails(string filename, string managerTypeLabel){
             << (*mb)->getDataStartingAddress();
             fileStream << "\t\t"
             << MEMORY_BLOCK_CONTENTS << '\t';
-            for(int i = 0;  (*mb)->getData()[i] != '\0'; ++i){
+            for(int i = 0; (*mb)->getData()[i] != '\0'; ++i){
                 fileStream << (*mb)->getData()[i];
             }
             fileStream << endl;
@@ -158,7 +158,7 @@ void MemoryManager::printDetails(string filename, string managerTypeLabel){
         << CONTENTS_STARTING_ADDRESS << ' '
         << (*mb)->getDataStartingAddress()
         << "\t\t" << MEMORY_BLOCK_CONTENTS << '\t';
-        for(int i = 0; i < (*mb)->getSize(); ++i){
+        for(int i = 0; (*mb)->getData()[i] != '\0'; ++i){
             fileStream << (*mb)->getData()[i];
         }
         fileStream << endl;

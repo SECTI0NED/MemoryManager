@@ -61,11 +61,6 @@ bool MemoryBlock::isFree() {
 }
 
 void MemoryBlock::clearData() {
-    int counter = 0;
-    while(counter <= size){
-        data[counter] = '\0';
-        counter++;
-    }
     blockIsFree = true;
 }
 
