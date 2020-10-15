@@ -2,6 +2,37 @@
 
 int main(int argc, char const *argv[])
 {
+    // const char* name= "testing";
+    // void* address = sbrk(8);
+    // strcpy((char*)address,name);
+    // std::cout<<(int*)address+1<<endl;
+    // std::cout<<address<<endl;
+
+
+    // char c = 'a';
+    // string s = "****;
+    // char cstring[s.size() + 1];
+    // strcpy(cstring, s.c_str());
+
+    // cout << sizeof(c) << endl;
+    // cout << sizeof(s) << endl;
+    // cout << sizeof(cstring) << endl;
+
+
+    // void * request1 = sbrk(5);
+    // int* startingAddress1 = (int*) request1;
+
+    // void * request2 = sbrk(1);
+    // int* startingAddress2 = (int*) request2;
+
+    // // Compare
+    // int* endAddress1 = startingAddress1 + 2;
+
+    // cout << startingAddress1 << endl;
+    // cout << endAddress1 << endl;
+    // cout << startingAddress2 << endl;
+
+
     if(argc <= 2){
         printHelpMessage();
         return EXIT_FAILURE;

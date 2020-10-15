@@ -80,7 +80,7 @@ void MemoryManager::allocateMemory(int numberOfRequestedBlocks) {
             memoryBlock->setSize(size);
             memoryBlock->isFree(false);
             memoryBlock->setData((char*) request);
-            memoryBlock->setDataStartingAddress((char**) request);
+           // memoryBlock->setDataStartingAddress((char**) request);
             ++id;
 
             allocMBList.push_back(memoryBlock);
