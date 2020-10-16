@@ -29,10 +29,9 @@ void MemoryBlock::resetData(const char* data){
 
     this->data = new char[size];
     strcpy(this->data, data);
-    this->startingAddress = (char**) this->data;
 
     /* This is will cause segfaults: */
-    // this->data = newData;
+    // this->data = (char*) data;
     // int counter = 0;
     // while(counter < size) {
     //     this->data[counter] = data[counter];

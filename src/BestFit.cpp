@@ -19,6 +19,7 @@ void BestFit::run(int allocateBlocks, int freeBlocks) {
         allocateMemory(allocateBlocks);
         if(!dataList.empty()){
             freeMemory(freeBlocks);
+            mergeBlocks();
         }
     }
     printDetails(BEST_FIT_FILENAME, BEST_FIT_LABEL);
@@ -28,10 +29,10 @@ void BestFit::run(int allocateBlocks, int freeBlocks) {
 
 list<MemoryBlock*>::iterator BestFit::retrieveBlock(int sizeRequired, bool* found) {
     list<MemoryBlock*>::iterator memoryBlockPtr = findBestFitBlock(sizeRequired, found);
-    if(*found == false){
-       mergeBlocks();
-       memoryBlockPtr = findBestFitBlock(sizeRequired, found);
-    }
+    // if(*found == false){
+    //    mergeBlocks();
+    //    memoryBlockPtr = findBestFitBlock(sizeRequired, found);
+    // }
     return memoryBlockPtr;
 }
 

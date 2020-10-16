@@ -18,6 +18,7 @@ void WorstFit::run(int allocateBlocks, int freeBlocks) {
         allocateMemory(allocateBlocks);
         if(!dataList.empty()){
             freeMemory(freeBlocks);
+            mergeBlocks();
         }
     }
     printDetails(WORST_FIT_FILENAME, WORST_FIT_LABEL);
@@ -26,10 +27,10 @@ void WorstFit::run(int allocateBlocks, int freeBlocks) {
 
 list<MemoryBlock*>::iterator WorstFit::retrieveBlock(int sizeRequired, bool* found) {
     list<MemoryBlock*>::iterator memoryBlockPtr = findWorstFitBlock(sizeRequired, found);
-    if(*found == false){
-       mergeBlocks();
-       memoryBlockPtr = findWorstFitBlock(sizeRequired, found);
-    }
+    // if(*found == false){
+    //    mergeBlocks();
+    //    memoryBlockPtr = findWorstFitBlock(sizeRequired, found);
+    // }
     return memoryBlockPtr;
 }
 

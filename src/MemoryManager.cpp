@@ -60,6 +60,7 @@ void MemoryManager::allocateMemory(int numberOfRequestedBlocks) {
                     MemoryBlock* splitMemoryBlock = splitBlock(memoryBlockPtr, size);
                     splitMemoryBlock->isFree(false);
                     splitMemoryBlock->resetData(data);
+                    mergeBlocks();
                     allocated = true;
                 }
             }

@@ -19,6 +19,7 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
         allocateMemory(allocateBlocks);
         if(!dataList.empty()){
             freeMemory(freeBlocks);
+            mergeBlocks();
         }
     }
     printDetails(FIRST_FIT_FILENAME, FIRST_FIT_LABEL);
@@ -27,10 +28,10 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
 
 list<MemoryBlock*>::iterator FirstFit::retrieveBlock(int sizeRequired, bool* found) {
     list<MemoryBlock*>::iterator memoryBlockPtr = findFirstFitBlock(sizeRequired, found);
-    if(*found == false){
-       mergeBlocks();
-       memoryBlockPtr = findFirstFitBlock(sizeRequired, found);
-    }
+    // if(*found == false){
+    //    mergeBlocks();
+    //    memoryBlockPtr = findFirstFitBlock(sizeRequired, found);
+    // }
     return memoryBlockPtr;
 }
 

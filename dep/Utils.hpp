@@ -57,9 +57,9 @@ using std::ofstream;
 #define DATA_SOURCE_FILE "[DATA SOURCE FILE NAME]:"
 #define LINE_BREAK "********************************************************************************************************************************************" 
 #define LINE_BREAK_SHORT "**********************************************************************"
+
 /***************************************TYPEDEFS**************************************/
 
-typedef char** memory_address;
 typedef list<char*>::iterator char_ptr_iterator;
 
 #endif // UTILS_H
