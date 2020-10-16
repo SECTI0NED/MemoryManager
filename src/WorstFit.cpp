@@ -15,8 +15,10 @@ WorstFit::~WorstFit() {}
 
 void WorstFit::run(int allocateBlocks, int freeBlocks) {
     while(!dataList.empty()){
+        // Allocate number of 'allocateBlocks'
         allocateMemory(allocateBlocks);
         if(!dataList.empty()){
+            // Randomly free number of 'freeBlocks'
             freeMemory(freeBlocks);
             mergeBlocks();
         }
