@@ -2,24 +2,6 @@
 
 int main(int argc, char const *argv[])
 {
- 
-
-    // void * request1 = sbrk(5);
-    // int* startingAddress1 = (int*) request1;
-
-    // void * request2 = sbrk(10);
-    // int* startingAddress2 = (int*) request2;
-
-    // // Compare
-    // char* endAddress1 = (char*) request1 + 5;
-
-    // cout << startingAddress1 << endl;
-
-    // cout << "This address: " << (int*) endAddress1 << endl << "Should be the same as " << startingAddress2 << endl;
-    // bool equal = ((int*) endAddress1) == (startingAddress2);
-    // cout << "Equal: " << equal << endl;
-
-
     if(argc <= 2){
         printHelpMessage();
         return EXIT_FAILURE;
