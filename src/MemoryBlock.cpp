@@ -41,10 +41,6 @@ void MemoryBlock::resetData(const char* data){
     // this->data[size] = '\0';
 }
 
-void MemoryBlock::setDataStartingAddress(memory_address startingAddress) {
-    this->startingAddress = startingAddress;
-}
-
 void MemoryBlock::isFree(bool blockIsFree){
     this->blockIsFree = blockIsFree;
 }
@@ -61,8 +57,8 @@ char* MemoryBlock::getData() {
     return data;
 }
 
-memory_address MemoryBlock::getDataStartingAddress() {
-    return startingAddress;
+int* MemoryBlock::getDataStartingAddress() {
+    return (int*) data;
 }
 
 bool MemoryBlock::isFree() {

@@ -56,6 +56,10 @@ class MemoryManager {
 
         // Name of the file for the data
         string dataSourceFile;
+
+        // bool compareAddress(MemoryBlock* first, MemoryBlock* second);
+
+        bool adjacentInMemory(MemoryBlock* first, MemoryBlock* second);
 };
 
 #endif // MEMORY_MANAGER_H

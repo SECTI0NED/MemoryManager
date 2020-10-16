@@ -80,7 +80,7 @@ void MemoryManager::allocateMemory(int numberOfRequestedBlocks) {
             memoryBlock->setSize(size);
             memoryBlock->isFree(false);
             memoryBlock->setData((char*) request);
-           // memoryBlock->setDataStartingAddress((char**) request);
+
             ++id;
 
             allocMBList.push_back(memoryBlock);
@@ -125,17 +125,22 @@ void MemoryManager::freeMemory(int numberOfRequestedBlocks) {
     } 
 }
 
+bool compareAddress(MemoryBlock* first, MemoryBlock* second) {
+    return (first->getDataStartingAddress() < second->getDataStartingAddress());
+}
+
 
 /* For merging consecutive free blocks in freedMBList */
 void MemoryManager::mergeBlocks() {
-
+    freedMBList.sort(compareAddress);
     list<MemoryBlock*>::iterator currentBlockPtr = freedMBList.begin();
     list<MemoryBlock*>::iterator nextBlockPtr = freedMBList.end();
 
     while((*currentBlockPtr) != freedMBList.back()){
         nextBlockPtr = currentBlockPtr;
         nextBlockPtr++;
-        if((*currentBlockPtr)->isFree() && (*nextBlockPtr)->isFree()){
+        if((*currentBlockPtr)->isFree() && (*nextBlockPtr)->isFree() 
+            && adjacentInMemory((*currentBlockPtr), (*nextBlockPtr))) {
             /* Retrieve the new size of the memory block */
             int currentBlockSize = (*currentBlockPtr)->getSize();
             int nextBlockSize = (*nextBlockPtr)->getSize();
@@ -159,6 +164,17 @@ void MemoryManager::mergeBlocks() {
             currentBlockPtr = nextBlockPtr;
         }
     }
+}
+
+
+bool MemoryManager::adjacentInMemory(MemoryBlock* first, MemoryBlock* second){
+    bool equal = false;
+    char* endAddressOfFirst = first->getData() + first->getSize();
+
+    if((int*) endAddressOfFirst == second->getDataStartingAddress()){
+        equal = true;
+    }
+    return equal;
 }
 
 /* Used to split a block */
