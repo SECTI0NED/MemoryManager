@@ -27,6 +27,7 @@ list<MemoryBlock*>::iterator MemoryManager::retrieveBlock(int sizeRequired, bool
 }
 
 void MemoryManager::allocateMemory(int numberOfRequestedBlocks) {
+    // Set the numberOfBlocks to allocate
    int numberOfBlocks = 0;
     if(numberOfRequestedBlocks <= (int) dataList.size()){
         numberOfBlocks = numberOfRequestedBlocks;
@@ -48,9 +49,19 @@ void MemoryManager::allocateMemory(int numberOfRequestedBlocks) {
         
         /* Decide where to allocate the information (allocMBList or freedMBList) */
         if(!freedMBList.empty()){
+            /* If there are memory blocks in the freedMBList then 
+            search to find it to a block to allocate the data. */
             bool found = false;
+
+            /* retreiveBlock() uses the child classes' method of 
+            retrieveBlock to get the block according to its type of alogorthm */
             list<MemoryBlock*>::iterator memoryBlockPtr = retrieveBlock(size, &found);
+
+            // If a block was found then allocate data accordingly
             if(found){
+                /* If the block size is the exact same as the size 
+                of the data then don't split the block, otherwise 
+                split and merge the block */
                 MemoryBlock* memoryBlock = *memoryBlockPtr;
                 if(memoryBlock->getSize() == size){
                     memoryBlock->isFree(false);
@@ -81,9 +92,7 @@ void MemoryManager::allocateMemory(int numberOfRequestedBlocks) {
             memoryBlock->setSize(size);
             memoryBlock->isFree(false);
             memoryBlock->setData((char*) request);
-
             ++id;
-
             allocMBList.push_back(memoryBlock);
             allocated = true;
         }
@@ -126,13 +135,25 @@ void MemoryManager::freeMemory(int numberOfRequestedBlocks) {
     } 
 }
 
+// Utility method for merging blocks
 bool compareAddress(MemoryBlock* first, MemoryBlock* second) {
     return (first->getDataStartingAddress() < second->getDataStartingAddress());
 }
 
+// Utility method for merging blocks
+bool MemoryManager::adjacentInMemory(MemoryBlock* first, MemoryBlock* second){
+    bool equal = false;
+    char* endAddressOfFirst = first->getData() + first->getSize();
 
-/* For merging consecutive free blocks in freedMBList */
+    if((int*) endAddressOfFirst == second->getDataStartingAddress()){
+        equal = true;
+    }
+    return equal;
+}
+
+/* For merging adjacent free blocks in memory */
 void MemoryManager::mergeBlocks() {
+    // Sort by memory of the data
     freedMBList.sort(compareAddress);
     list<MemoryBlock*>::iterator currentBlockPtr = freedMBList.begin();
     list<MemoryBlock*>::iterator nextBlockPtr = freedMBList.end();
@@ -168,15 +189,7 @@ void MemoryManager::mergeBlocks() {
 }
 
 
-bool MemoryManager::adjacentInMemory(MemoryBlock* first, MemoryBlock* second){
-    bool equal = false;
-    char* endAddressOfFirst = first->getData() + first->getSize();
 
-    if((int*) endAddressOfFirst == second->getDataStartingAddress()){
-        equal = true;
-    }
-    return equal;
-}
 
 /* Used to split a block */
 MemoryBlock* MemoryManager::splitBlock(list<MemoryBlock*>::iterator memoryBlockIter, int size){
