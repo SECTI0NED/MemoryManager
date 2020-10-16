@@ -12,7 +12,7 @@ How to run and compile source code:
 Type: make clean
 Type: make
 The program file is 'program', it requires 2 arguments to run:
-./program [filename] [algorithm]
+Format: ./program [filename] [algorithm]
 First argument: filename of which the algorithm uses (destination should be relative to the Makefile).
 Second argument: algorithm - which is either 'ff' (First Fit), 'bf' (Best Fit), or 'wf' (Worst Fit).
 

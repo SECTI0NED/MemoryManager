@@ -29,7 +29,6 @@ class MemoryBlock {
         int getId();
         
     private:
-        memory_address startingAddress;
         char* data;
         int size;
         int id;
