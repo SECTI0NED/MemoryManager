@@ -27,7 +27,7 @@ class MemoryManager {
         // Number of times blocks were split in freedMBList
         int splitTotal;
 
-        // Total emmory allocated by sbrk in allocMBList
+        // Total memory allocated by sbrk in allocMBList
         int sbrkTotal;
 
         list<MemoryBlock*> allocMBList;
