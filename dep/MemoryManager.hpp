@@ -1,5 +1,5 @@
 /* 
-    Class for representing Memoey
+    Class for representing a Memory Manager (parent class)
 */
 #ifndef MEMORY_MANAGER_H
 #define MEMORY_MANAGER_H
@@ -54,7 +54,7 @@ class MemoryManager {
         void printDetailsConsole(string filename, string managerTypeLabel);
 
         string getSourceFile();
-        
+
         
         /* Deprecated */
         void printDetailsFile(string filename, string managerTypeLabel);

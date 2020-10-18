@@ -1,5 +1,5 @@
 /*
-    Class for representing a memory blcok
+    Class for representing a memory block
 */
 #ifndef MEMORY_BLOCK_H
 #define MEMORY_BLOCK_H
