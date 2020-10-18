@@ -33,9 +33,11 @@ using std::ofstream;
 #define ALLOCATE 1000
 #define FREE 500
 
-#define FIRST_FIT_FILENAME "results_firstfit.txt"
-#define BEST_FIT_FILENAME "results_bestfit.txt"
-#define WORST_FIT_FILENAME "results_worstfit.txt"
+
+
+#define FIRST_FIT_FILENAME "results_firstfit"
+#define BEST_FIT_FILENAME "results_bestfit"
+#define WORST_FIT_FILENAME "results_worstfit"
 
 #define FIRST_FIT_LABEL "First Fit"
 #define BEST_FIT_LABEL "Best Fit"
@@ -43,6 +45,23 @@ using std::ofstream;
 
 #define FREED_TITLE "freedMBList:"
 #define ALLOC_TITLE "allocMBList:"
+
+#define DELIM ","
+
+
+
+/***************************************TYPEDEFS**************************************/
+
+typedef list<char*>::iterator char_ptr_iterator;
+
+
+
+
+/**********************************DEPRECATED*****************************************/
+
+#define FIRST_FIT_FILENAME_TXT "results_firstfit.txt"
+#define BEST_FIT_FILENAME_TXT "results_bestfit.txt"
+#define WORST_FIT_FILENAME_TXT "results_worstfit.txt"
 
 #define TITLE "[MEMORY MANAGER/ALLOCATOR TYPE]"
 #define SBRK_TOTAL "[TOTAL MEMORY ALLOCATED BY SBRK]:"
@@ -57,9 +76,5 @@ using std::ofstream;
 #define DATA_SOURCE_FILE "[DATA SOURCE FILE NAME]:"
 #define LINE_BREAK "********************************************************************************************************************************************" 
 #define LINE_BREAK_SHORT "**********************************************************************"
-
-/***************************************TYPEDEFS**************************************/
-
-typedef list<char*>::iterator char_ptr_iterator;
 
 #endif // UTILS_H

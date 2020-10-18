@@ -219,8 +219,81 @@ MemoryBlock* MemoryManager::splitBlock(list<MemoryBlock*>::iterator memoryBlockI
     return memoryBlock;
 }
 
-/* For printing details to file*/
+string MemoryManager::getSourceFile() {
+    string source = "";
+    for(unsigned int i = 0; i < dataSourceFile.size(); ++i){
+        if(dataSourceFile[i] == '.') {
+            break;
+        } else {
+            source += dataSourceFile[i];
+        }
+    }
+    return source;
+}
+
+
+/* For printing details in csv format) */ 
 void MemoryManager::printDetails(string filename, string managerTypeLabel){
+    string source = getSourceFile();
+    resultsFileName = filename += ("-" + source + ".csv");
+    ofstream fileStream(resultsFileName);
+    fileStream << "Data Source File" << DELIM << dataSourceFile << endl
+               << "Memory Manager Type" << DELIM << managerTypeLabel << endl
+               << "Total Memory Allocated by sbrk (bytes)" << DELIM <<  sbrkTotal << endl
+               << "Size of freedMBList" << DELIM << freedMBList.size() << endl
+               << "Size of allocMBList" << DELIM << allocMBList.size() << endl
+               << "Number of Times Blocks were Split" << DELIM << splitTotal << endl
+               << "Number of Times Blocks were Merged" << DELIM << mergeTotal <<  endl;
+    fileStream << FREED_TITLE << endl;
+    fileStream << "Memory Block Address" << DELIM << "Size" << DELIM << "Content Starting Address" << DELIM << "Contents" << endl;
+    for(list<MemoryBlock*>::iterator mb = freedMBList.begin(); mb != freedMBList.end(); ++mb){
+        fileStream << (*mb)->getMemoryBlockAddress() << DELIM << (*mb)->getSize();
+        if(!(*mb)->isFree()) {
+            fileStream << DELIM << (*mb)->getDataStartingAddress();
+            fileStream << DELIM;
+            for(int i = 0; (*mb)->getData()[i] != '\0'; ++i){
+                fileStream << (*mb)->getData()[i];
+            }
+            fileStream << endl;
+        } else {
+            fileStream << endl;
+        }
+    }
+    fileStream << ALLOC_TITLE << endl;
+    fileStream << "Memory Block Address" << DELIM << "Size" << DELIM << "Content Starting Address" << DELIM << "Contents" << endl;
+    for(list<MemoryBlock*>::iterator mb = allocMBList.begin(); mb != allocMBList.end(); ++mb) {
+        fileStream << (*mb)->getMemoryBlockAddress() << DELIM << (*mb)->getSize();
+        fileStream << DELIM << (*mb)->getDataStartingAddress();
+        fileStream << DELIM;
+        for(int i = 0; (*mb)->getData()[i] != '\0'; ++i){
+            fileStream << (*mb)->getData()[i];
+        }
+        fileStream << endl;
+    }
+    fileStream.close();
+    printDetailsConsole(resultsFileName, managerTypeLabel);
+}
+
+
+
+
+/* For printing details to console */
+void MemoryManager::printDetailsConsole(string resultsFilename, string managerTypeLabel){
+    cout << LINE_BREAK_SHORT << endl;
+    cout << TITLE << "\t\t\t" << managerTypeLabel << endl
+         << SBRK_TOTAL << "\t\t" << sbrkTotal << " bytes" << endl
+         << FREED_SIZE << "\t\t\t" << freedMBList.size() << endl
+         << ALLOC_SIZE << "\t\t\t" << allocMBList.size() << endl
+         << SPLIT << "\t\t" << splitTotal << endl
+         << MERGED << "\t\t" <<  mergeTotal << endl
+         << endl
+         << "See '" << resultsFilename << "' for more details." << endl
+         << endl;
+    cout << LINE_BREAK_SHORT << endl;
+}
+
+/* For printing details to file (txt) */
+void MemoryManager::printDetailsFile(string filename, string managerTypeLabel){
     ofstream fileStream(filename);
     fileStream << DATA_SOURCE_FILE << "\t\t\t" << dataSourceFile << endl
     << TITLE << "\t\t\t" << managerTypeLabel << endl
@@ -268,19 +341,4 @@ void MemoryManager::printDetails(string filename, string managerTypeLabel){
         fileStream << endl;
     }
     fileStream.close();
-}
-
-/* For printing details to console */
-void MemoryManager::printDetailsConsole(string filename, string managerTypeLabel){
-    cout << LINE_BREAK_SHORT << endl;
-    cout << TITLE << "\t\t\t" << managerTypeLabel << endl
-         << SBRK_TOTAL << "\t\t" << sbrkTotal << " bytes" << endl
-         << FREED_SIZE << "\t\t\t" << freedMBList.size() << endl
-         << ALLOC_SIZE << "\t\t\t" << allocMBList.size() << endl
-         << SPLIT << "\t\t" << splitTotal << endl
-         << MERGED << "\t\t" <<  mergeTotal << endl
-         << endl
-         << "See '" << filename << "' for more details." << endl
-         << endl;
-    cout << LINE_BREAK_SHORT << endl;
 }

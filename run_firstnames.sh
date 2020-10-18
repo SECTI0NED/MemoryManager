@@ -1,5 +1,5 @@
 make clean
 make
-./program _data/first-names.txt ff
-./program _data/first-names.txt bf
-./program _data/first-names.txt wf
+./program first-names.txt ff
+./program first-names.txt bf
+./program first-names.txt wf

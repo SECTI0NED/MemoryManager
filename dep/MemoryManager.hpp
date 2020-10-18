@@ -50,14 +50,22 @@ class MemoryManager {
         
         // For printing details to file
         void printDetails(string filename, string managerTypeLabel);
-
         // For printing details to console
         void printDetailsConsole(string filename, string managerTypeLabel);
+
+        string getSourceFile();
+        
+        
+        /* Deprecated */
+        void printDetailsFile(string filename, string managerTypeLabel);
+
+     
 
         // Name of the file for the data
         string dataSourceFile;
 
-        // bool compareAddress(MemoryBlock* first, MemoryBlock* second);
+        // Name of the results file
+        string resultsFileName;
 
         bool adjacentInMemory(MemoryBlock* first, MemoryBlock* second);
 };

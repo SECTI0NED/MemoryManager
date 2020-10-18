@@ -24,7 +24,6 @@ void WorstFit::run(int allocateBlocks, int freeBlocks) {
         }
     }
     printDetails(WORST_FIT_FILENAME, WORST_FIT_LABEL);
-    printDetailsConsole(WORST_FIT_FILENAME, WORST_FIT_LABEL);
 }
 // Returns the block found by the worst fit algorithm
 list<MemoryBlock*>::iterator WorstFit::retrieveBlock(int sizeRequired, bool* found) {

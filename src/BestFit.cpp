@@ -25,7 +25,6 @@ void BestFit::run(int allocateBlocks, int freeBlocks) {
         }
     }
     printDetails(BEST_FIT_FILENAME, BEST_FIT_LABEL);
-    printDetailsConsole(BEST_FIT_FILENAME, BEST_FIT_LABEL);
 }
 
 // Returns the block found by the best fit algorithm

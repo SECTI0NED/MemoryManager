@@ -25,7 +25,7 @@ void FirstFit::run(int allocateBlocks, int freeBlocks) {
         }
     }
     printDetails(FIRST_FIT_FILENAME, FIRST_FIT_LABEL);
-    printDetailsConsole(FIRST_FIT_FILENAME, FIRST_FIT_LABEL);
+    
 }
 
 
