@@ -1,3 +1,6 @@
+# Wrote this in a textfile because some people don't know how to open a markdown file.
+
+========================================================
 How to execute code on each data set:
 
 Type in console: ./run_firstnames.sh
